@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d262d"/>
+  <meta name="description" content="危废清运智能待办助手：把微信清运通知变成清晰可追踪的工作任务。"/>
+  <title>危废清运智能待办助手 · 工作台</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-symbol">↗</div><div><strong>清运智办</strong><span>DISPATCH DESK</span></div></div>
+      <div class="nav-heading">业务工作台</div>
+      <nav class="nav" aria-label="主导航">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">▦</span> 清运总览</button>
+        <button class="nav-item" data-view="tasks"><span class="nav-icon">☷</span> 全部任务 <span class="mini-count" id="sidebar-total">0</span></button>
+        <button class="nav-item" data-view="new"><span class="nav-icon">＋</span> 智能录入</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="safe-dot"></div><div><b id="privacy-mode">本地隐私模式</b><small id="privacy-sub">数据保存在本浏览器，未上传服务器</small></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="header"><div><span class="eyebrow">危废处置 · 清运协调</span><h1 id="page-title">清运工作总览</h1><p id="page-subtitle">把微信通知变成确定的执行计划，重要任务不遗漏。</p></div><div class="top-actions"><span class="date-label" id="today-label"></span><button type="button" class="btn btn-primary" id="open-new">＋ 新建任务</button></div></header>
+
+      <section class="dashboard-top" id="dashboard-top">
+        <div class="metrics">
+          <div class="metric"><div class="metric-head"><span>全部清运需求</span><span class="metric-glyph teal">▤</span></div><div class="metric-value" id="count-all">0</div><small>已录入的任务总数</small></div>
+          <div class="metric"><div class="metric-head"><span>待安排 / 待确认</span><span class="metric-glyph amber">◷</span></div><div class="metric-value" id="count-pending">0</div><small>需要推进的客户需求</small></div>
+          <div class="metric"><div class="metric-head"><span>已安排 / 运输中</span><span class="metric-glyph blue">▰</span></div><div class="metric-value" id="count-scheduled">0</div><small>需要跟踪执行情况</small></div>
+          <div class="metric warning"><div class="metric-head"><span>重点提醒</span><span class="metric-glyph red">!</span></div><div class="metric-value" id="count-alert">0</div><small>临近、逾期或待核实</small></div>
+        </div>
+        <div class="hero-line"><div><span class="hero-label">今日工作提示</span><h2 id="daily-note">今日暂无紧急待办</h2><p id="daily-sub">先把最新的微信消息转成清运任务。</p></div><button class="btn btn-light" id="jump-alerts">查看待办提醒 →</button></div>
+      </section>
+
+      <section class="workspace" id="new-section">
+        <div class="section-heading"><div><div class="eyebrow green">01 / 信息捕获</div><h2>微信消息智能录入</h2><p>复制聊天原文 → 提取字段 → 人工核对 → 保存待办</p></div><span class="section-tag">本地规则解析 · 无需联网</span></div>
+        <div class="entry-grid">
+          <div class="panel clipboard-panel"><div class="panel-title"><span>原始微信通知</span><span class="hint">文字复制后粘贴</span></div><textarea id="raw-message" placeholder="例如：张经理，上海某某电子公司下周一上午要清运废液，预计5吨、20桶，麻烦安排车辆。" spellcheck="false"></textarea><div class="row-between smallgap"><button class="btn btn-soft" id="sample-msg" type="button">填入演示消息</button><button class="btn btn-primary" type="button" id="parse-message">✦ 提取清运信息</button></div><div class="privacy-note">◉ 解析仅在当前设备完成。原始信息保存到任务中，方便后续追溯；录入前请遵守单位信息安全要求。</div></div>
+          <div class="panel form-panel"><div class="panel-title"><span id="form-title">清运任务确认单</span><span class="hint" id="edit-label">请核对后保存</span></div>
+            <form id="task-form" autocomplete="off">
+              <div class="form-grid">
+                <label class="field wide">客户 / 产废企业<input name="customerId" type="hidden"/><datalist id="task-customers"></datalist><input list="task-customers" name="client" placeholder="请输入企业全称" maxlength="100"/></label>
+                <label class="field">计划清运日期<input type="date" name="pickupDate"/></label>
+                <label class="field">预计清运时段<input name="timeWindow" placeholder="上午 / 下午 / 具体时间" maxlength="40"/></label>
+                <label class="field">废物名称<input name="wasteName" placeholder="例如：废液" maxlength="80"/></label>
+                <label class="field">危废类别或代码<input name="wasteCode" placeholder="例如：HW08 / 900-249-08" maxlength="100"/></label>
+                <label class="field">预计重量<input name="weight" placeholder="例如：5吨" maxlength="40"/></label>
+                <label class="field">包装 / 件数<input name="packaging" placeholder="例如：20桶" maxlength="60"/></label>
+                <label class="field">客户联系人<input name="contactName" placeholder="例如：张经理" maxlength="40"/></label>
+                <label class="field">联系电话<input name="phone" placeholder="选填" maxlength="30"/></label>
+                <label class="field wide">清运地址<input name="address" placeholder="客户装货地址" maxlength="200"/></label>
+                <label class="field">任务状态<select name="status"><option>待安排</option><option>待确认</option><option>已安排</option><option>运输中</option><option>已完成</option><option>已取消</option></select></label>
+                <label class="field">任务优先级<select name="priority"><option>普通</option><option>紧急</option></select></label>
+                <label class="field">承运单位<input name="carrier" placeholder="已安排后补录" maxlength="100"/></label>
+                <label class="field">车牌号码<input name="plate" placeholder="已安排后补录" maxlength="30"/></label>
+                <label class="field">驾驶员 / 联系方式<input name="driver" placeholder="选填" maxlength="80"/></label>
+                <label class="field">跟进提醒时间<input type="datetime-local" name="remindAt"/></label>
+                <label class="field wide">执行备注<textarea name="notes" rows="2" placeholder="需要核实的事项、车辆安排反馈、联单进度等" maxlength="1000"></textarea></label>
+              </div>
+              <div id="parse-warnings" class="parse-warnings" hidden></div>
+              <details id="task-trace" hidden><summary>首次原文与操作记录</summary><pre id="task-trace-text" style="white-space:pre-wrap;word-break:break-word"></pre></details>
+              <div class="form-footer"><button class="btn btn-ghost" id="reset-form" type="button">清空表单</button><button class="btn btn-primary" type="submit" id="save-task">保存清运任务</button></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-area" id="tasks-section"><div class="section-heading"><div><div class="eyebrow green">02 / 进度跟踪</div><h2>清运待办清单</h2><p>按紧迫程度排序，跟进每一条需求的执行结果。</p></div><div class="task-actions"><button class="btn btn-soft" type="button" id="export-csv">导出清运计划 CSV</button><button class="btn btn-soft" type="button" id="export-json">备份数据 JSON</button><label class="btn btn-soft file-label" for="import-file">导入备份<input id="import-file" type="file" accept="application/json,.json" hidden/></label></div></div>
+        <div class="toolbar"><div class="filters" id="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="待处理">待处理</button><button class="filter" data-filter="已安排">已安排</button><button class="filter" data-filter="运输中">运输中</button><button class="filter" data-filter="已完成">已完成</button><button class="filter" data-filter="提醒">重点提醒</button></div><input id="search" class="search" type="search" placeholder="搜索客户 / 危废 / 车牌 / 消息"/></div>
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+      </section>
+
+      <footer class="footer"><span>危废清运智能待办助手 · v2.0 开发版</span><span>提醒仅在打开本工具时显示 · 不是电子联单申报或合规判定系统</span></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script src="../miniprogram/utils/parser.js"></script>
+  <script src="../miniprogram/utils/reminders.js"></script><script src="../miniprogram/utils/repository.js"></script><script src="../miniprogram/utils/backup.js"></script><script src="data.js"></script><script src="app.js"></script>
+</body>
+</html>

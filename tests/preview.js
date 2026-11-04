@@ -1,0 +1,3 @@
+// Synthetic data only; used for local UI acceptance. Not a production launcher.
+'use strict';const {createApplication}=require('../backend/application');const fs=require('node:fs');const os=require('node:os');const path=require('node:path');const crypto=require('node:crypto');
+(async()=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'dispatch-preview-')),app=createApplication({dataDir:dir,key:crypto.randomBytes(32),allowHttp:true});await app.addUser({username:'preview',password:'Preview-test-only-321!',orgId:'preview-org',role:'admin'});await app.listen(18765);console.log('Synthetic preview: http://127.0.0.1:18765/web/');for(const sig of ['SIGINT','SIGTERM'])process.on(sig,async()=>{await app.close();fs.rmSync(dir,{recursive:true,force:true});process.exit(0)})})();

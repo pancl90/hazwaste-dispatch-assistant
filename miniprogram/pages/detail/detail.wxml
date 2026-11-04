@@ -1,0 +1,43 @@
+<view class="detail-screen">
+  <view class="page-heading"><view class="eyebrow">清运需求</view><view class="detail-title">{{form.client||'待核实客户'}}</view><view class="page-caption">创建于 {{createdLabel}} · 每一次修改都有记录</view></view>
+  <view class="group-label">任务进度</view>
+  <view class="progress card"><picker range="{{statuses}}" value="{{statusIndex}}" bindchange="statusChange"><view class="picker-state"><view><view class="progress-caption">当前状态</view><text>{{form.status}}</text></view><view class="state-accessory">切换状态 <view class="chevron"></view></view></view></picker><button class="secondary progress-btn" wx:if="{{nextStatus}}" bindtap="next">推进至「{{nextStatus}}」</button></view>
+  <view class="group-label">清运计划</view>
+  <view class="group-card">
+    <view class="field"><text>产废企业</text><input value="{{form.client}}" data-field="client" bindinput="editField" placeholder="客户全称"/></view>
+    <view class="field"><text>计划清运日期</text><picker mode="date" value="{{form.pickupDate}}" bindchange="dateChange"><view class="picker-field"><text>{{form.pickupDate||'选择清运日期'}}</text><view class="chevron"></view></view></picker></view>
+    <view class="field"><text>计划清运时段</text><input value="{{form.timeWindow}}" data-field="timeWindow" bindinput="editField" placeholder="上午 / 下午 / 具体时间"/></view>
+  </view>
+  <view class="group-label">危废与包装信息</view>
+  <view class="group-card">
+    <view class="field"><text>废物名称</text><input value="{{form.wasteName}}" data-field="wasteName" bindinput="editField" placeholder="待核实"/></view>
+    <view class="field"><text>危废代码</text><input value="{{form.wasteCode}}" data-field="wasteCode" bindinput="editField" placeholder="待核实"/></view>
+    <view class="field"><text>预计重量 / 包装数量</text><view class="two"><input value="{{form.weight}}" data-field="weight" bindinput="editField" placeholder="吨或公斤"/><input value="{{form.packaging}}" data-field="packaging" bindinput="editField" placeholder="桶、袋等"/></view></view>
+  </view>
+  <view class="group-label">联系人与装货地址</view>
+  <view class="group-card">
+    <view class="field"><text>联系人</text><input value="{{form.contactName}}" data-field="contactName" bindinput="editField" placeholder="选填"/></view>
+    <view class="field"><text>联系电话</text><input value="{{form.phone}}" data-field="phone" bindinput="editField" placeholder="选填"/></view>
+    <view class="field"><text>装货地址</text><input value="{{form.address}}" data-field="address" bindinput="editField" placeholder="选填"/></view>
+  </view>
+  <view class="group-label">运输安排</view>
+  <view class="group-card">
+    <view class="field"><text>承运单位</text><input value="{{form.carrier}}" data-field="carrier" bindinput="editField" placeholder="安排后填写"/></view>
+    <view class="field"><text>车牌号</text><input value="{{form.plate}}" data-field="plate" bindinput="editField" placeholder="安排后填写"/></view>
+    <view class="field"><text>司机 / 联系方式</text><input value="{{form.driver}}" data-field="driver" bindinput="editField" placeholder="选填"/></view>
+  </view>
+  <view class="group-label">跟进提醒与备注</view>
+  <view class="group-card">
+    <view class="field"><text>提醒日期</text><picker mode="date" value="{{remindDate}}" bindchange="remindDateChange"><view class="picker-field"><text>{{remindDate||'未设置'}}</text><view class="chevron"></view></view></picker></view>
+    <view class="field"><text>提醒时间</text><picker mode="time" value="{{remindTime}}" bindchange="remindTimeChange"><view class="picker-field"><text>{{remindTime||'09:00'}}</text><view class="chevron"></view></view></picker></view>
+    <view class="field"><text>执行备注</text><textarea value="{{form.notes}}" data-field="notes" bindinput="editField" maxlength="1000" placeholder="沟通反馈、异常情况与待核实事项"/></view>
+  </view>
+  <view class="group-label">原始通知</view>
+  <view class="source card"><view class="source-heading">首次录入原文</view><text selectable="true">{{form.originalMessage||form.rawMessage||'手动创建，未保存原文'}}</text><block wx:if="{{form.originalMessage}}"><block wx:if="{{form.originalMessage!==form.rawMessage}}"><view class="source-heading">当前核对原文</view><text selectable="true">{{form.rawMessage}}</text></block></block></view>
+  <view class="group-label">操作记录</view>
+  <view class="source card"><view wx:if="{{!history.length}}" class="notice">暂无操作记录</view><view wx:for="{{history}}" wx:key="index" class="history"><view class="history-dot"></view><view class="history-content"><text>{{item.action}}</text><text class="history-at">{{item.at}}</text></view></view></view>
+  <view class="delete-card"><button class="delete" bindtap="remove">删除当前任务</button></view>
+  <view class="footnote">清运信息请与合同、危废类别、联单和承运资质等原始记录核对。</view>
+  <view class="detail-bottom-space"></view>
+  <view class="save-dock"><button class="primary" bindtap="save">保存修改</button></view>
+</view>

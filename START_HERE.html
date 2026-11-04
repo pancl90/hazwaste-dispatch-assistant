@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d262d"/>
+  <meta name="description" content="危废清运智能待办助手：把微信清运通知变成清晰可追踪的工作任务。"/>
+  <title>危废清运智能待办助手 · 工作台</title>
+  <style>:root{--ink:#152c34;--muted:#72818a;--line:#e5ebe9;--bg:#f5f8f7;--paper:white;--accent:#14866b;--accent-deep:#106953;--sidebar:#102830;--shadow:0 11px 35px rgba(17,49,51,.045)}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif;color:var(--ink)}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #9bddca;outline-offset:2px}.layout{min-height:100vh;display:flex}.sidebar{background:var(--sidebar);color:#fff;flex:0 0 226px;width:226px;padding:29px 17px;display:flex;flex-direction:column;position:sticky;height:100vh;top:0}.brand{display:flex;align-items:center;gap:11px;padding:2px 9px 49px}.brand-symbol{height:40px;width:40px;border-radius:13px;display:grid;place-items:center;font-weight:900;font-size:27px;background:linear-gradient(145deg,#29a47e,#0e775f);color:#fff}.brand strong{display:block;font-size:19px;letter-spacing:1px}.brand span{display:block;font-size:9px;color:#8caaa7;letter-spacing:2.3px;margin-top:1px}.nav-heading{font-size:10px;color:#78959c;letter-spacing:2px;padding-left:16px;margin-bottom:12px}.nav{display:grid;gap:6px}.nav-item{width:100%;display:flex;align-items:center;gap:13px;padding:13px 12px;color:#aec2c4;background:transparent;border:0;text-align:left;border-radius:10px}.nav-item:hover{background:#21454a}.nav-item.active{background:#214940;color:#fff;font-weight:600}.nav-icon{font-size:19px;width:22px;text-align:center}.mini-count{font-size:11px;margin-left:auto;color:#bfd2d2}.sidebar-bottom{margin-top:auto;border-top:1px solid #2b474d;padding:21px 7px;display:flex;align-items:start;gap:9px}.safe-dot{width:8px;height:8px;border-radius:50%;background:#47c49a;margin-top:5px;flex-shrink:0;box-shadow:0 0 0 4px #24504b}.sidebar-bottom b{font-size:12px;font-weight:500}.sidebar-bottom small{display:block;color:#88a9aa;font-size:10px;margin-top:4px;line-height:1.6}.main{width:calc(100% - 226px);max-width:1600px;margin:0 auto;padding:37px clamp(24px,4%,64px) 20px}.header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:#7a9197;font-size:11px;letter-spacing:1.5px;font-weight:700}.eyebrow.green{color:#168b71}.header h1{font-size:29px;letter-spacing:-.5px;margin:6px 0 5px;font-weight:800}.header p,.section-heading p{color:var(--muted);margin:0;font-size:12px}.top-actions{display:flex;align-items:center;gap:14px}.date-label{color:#839298;font-size:12px;white-space:nowrap}.btn{border:1px solid transparent;border-radius:9px;min-height:36px;padding:9px 14px;white-space:nowrap;transition:background .12s ease,transform .12s}.btn:hover{transform:translateY(-1px)}.btn-primary{background:var(--accent);color:#fff;font-weight:600}.btn-primary:hover{background:var(--accent-deep)}.btn-soft{background:#edf4f1;border-color:#e0eae5;color:#28644f}.btn-soft:hover{background:#e1ede7}.btn-ghost{background:transparent;color:#667c81;border-color:#e2e9e6}.btn-light{background:#eaf5f1;color:#116c53;font-weight:600}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.metric{background:#fff;border:1px solid #ebefee;border-radius:13px;min-height:136px;padding:18px 19px;box-shadow:var(--shadow)}.metric-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;color:#607179}.metric-glyph{width:27px;height:27px;border-radius:8px;display:grid;place-items:center;font-size:17px}.metric-glyph.teal{color:#16866d;background:#dff5eb}.metric-glyph.amber{color:#b98428;background:#fff5df}.metric-glyph.blue{color:#448bb6;background:#e7f4fd}.metric-glyph.red{color:#c75d56;background:#fff0eb}.metric-value{font-size:33px;font-weight:800;margin:9px 0 0;line-height:1.1}.metric small{font-size:11px;color:#89979b}.metric.warning{border-color:#f7e7e2}.hero-line{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:16px;border-radius:13px;background:linear-gradient(105deg,#163d3f,#205347);color:#fff;padding:21px 25px;overflow:hidden;position:relative}.hero-line:after{content:"";position:absolute;border:1px solid #ffffff12;width:300px;height:300px;border-radius:50%;right:16%;top:-235px;pointer-events:none}.hero-label{color:#a2d2c3;font-size:11px;letter-spacing:1px}.hero-line h2{margin:4px 0;font-size:18px}.hero-line p{font-size:12px;color:#b3d0c9;margin:0}.workspace,.task-area{margin-top:34px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:14px}.section-heading h2{font-size:19px;margin:4px 0 4px}.section-tag{background:#e6f3eb;color:#528d73;border:1px solid #d9eddf;border-radius:20px;font-size:11px;padding:6px 11px}.entry-grid{display:grid;grid-template-columns:minmax(260px,0.94fr) minmax(360px,1.35fr);align-items:start;gap:15px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:21px;box-shadow:var(--shadow)}.panel-title{display:flex;align-items:center;justify-content:space-between;font-weight:700;margin-bottom:15px}.hint{font-size:11px;color:#94a1a4;font-weight:400}.clipboard-panel>textarea{width:100%;min-height:267px;resize:vertical;border:1px solid #dce7e3;background:#fbfdfc;border-radius:10px;padding:14px;line-height:1.9;color:#29444c;font-size:13px}.clipboard-panel>textarea::placeholder{color:#a5b2b1}.row-between{display:flex;justify-content:space-between;align-items:center;gap:10px}.smallgap{margin-top:12px}.privacy-note{margin-top:18px;font-size:11px;line-height:1.8;background:#f4f9f6;color:#739486;border-radius:9px;padding:11px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:13px;row-gap:12px}.field{color:#61767a;font-size:11px;font-weight:600;display:flex;flex-direction:column;gap:5px}.field.wide{grid-column:span 2}.field input,.field select,.field textarea{border:1px solid #dfe8e6;border-radius:7px;width:100%;padding:9px 10px;min-height:38px;color:#203c43;background:#fff;font-weight:400;font-size:12px}.field textarea{resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#afbbbd}.form-footer{display:flex;align-items:center;justify-content:end;gap:10px;border-top:1px solid #eef1ef;padding-top:14px;margin-top:15px}.parse-warnings{font-size:11px;color:#9b622a;padding:12px;border-radius:8px;background:#fff7e9;margin-top:14px;white-space:pre-line}.parse-warnings[hidden],.toast[hidden]{display:none}.task-area{margin-top:37px}.task-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.task-actions .btn{font-size:11px;padding:8px 11px;min-height:32px}.file-label{display:inline-flex;align-items:center}.toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px 12px 0 0;padding:14px 17px}.filters{display:flex;gap:6px;flex-wrap:wrap}.filter{background:transparent;border:0;border-radius:7px;padding:7px 10px;color:#708085;font-size:12px}.filter.active{color:#137259;background:#e5f4ec;font-weight:700}.search{width:220px;min-height:35px;padding:8px 11px;border:1px solid #e0e8e4;border-radius:8px;font-size:12px;outline:none}.task-list{display:grid;gap:0;border-radius:0 0 12px 12px;overflow:hidden;border:1px solid #e5eae7;border-top:0;background:white}.task-card{display:flex;align-items:center;gap:18px;background:white;padding:17px 19px;border-bottom:1px solid #edf1ef}.task-card:last-child{border:0}.task-card:hover{background:#fcfdfc}.task-mark{background:#f0f6f3;color:#15906e;height:40px;width:40px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;font-size:20px}.task-main{flex:1;min-width:0}.task-title{display:flex;gap:10px;align-items:center;font-weight:700;margin-bottom:6px;flex-wrap:wrap}.task-title .client{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.task-details{color:#849297;font-size:12px;display:flex;gap:13px;flex-wrap:wrap}.tag{font-size:10px;border-radius:5px;padding:3px 7px;font-weight:600;white-space:nowrap}.status-待安排,.status-待确认{background:#fff4df;color:#b37c26}.status-已安排,.status-运输中{background:#e3f2fc;color:#277da5}.status-已完成{background:#e2f5e9;color:#138456}.status-已取消{background:#f0f0f0;color:#777}.tag.urgent,.tag.overdue{color:#c65041;background:#fff0ec}.tag.soon{color:#bd7d1d;background:#fff2da}.tag.need{color:#a86f2f;background:#fff7e5}.task-buttons{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.task-buttons button{border:1px solid #dce9e2;border-radius:7px;padding:7px 10px;color:#237a60;background:#fff;font-size:11px}.task-buttons button:hover{background:#f0f8f3}.task-buttons .danger-text{color:#a06666;border-color:#f4e3e3}.empty{padding:48px 25px;text-align:center;color:#8aa0a0}.empty-icon{font-size:40px;margin-bottom:8px}.empty h3{color:#526c6b;margin:4px}.footer{margin-top:28px;padding:18px 0;border-top:1px solid #e8eeeb;color:#a3afb0;font-size:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1d4741;color:#fff;padding:12px 19px;border-radius:10px;box-shadow:0 15px 50px #152f3d33;z-index:99;font-size:13px;max-width:min(90vw,500px)}.toast.error{background:#943b36}@media(max-width:1180px){.main{padding:25px}.sidebar{width:205px;flex-basis:205px}.entry-grid{grid-template-columns:1fr}.clipboard-panel>textarea{min-height:150px}.metric{padding:16px 12px}}@media(max-width:760px){.layout{display:block}.sidebar{height:auto;width:100%;position:static;padding:12px 15px;display:flex;flex-direction:row;align-items:center;justify-content:space-between}.brand{padding:0}.brand strong{font-size:17px}.brand span,.nav-heading,.sidebar-bottom{display:none}.nav{display:flex;gap:5px}.nav-item{width:auto;padding:7px 9px;font-size:11px;gap:5px}.nav-icon{font-size:14px;width:auto}.mini-count{display:none}.main{width:100%;padding:19px 14px}.header{align-items:flex-start}.header h1{font-size:23px}.header p{font-size:11px}.date-label{display:none}.top-actions .btn{padding:8px 10px;font-size:12px}.metrics{grid-template-columns:repeat(2,1fr);gap:9px}.metric{min-height:120px}.hero-line{padding:17px}.hero-line h2{font-size:15px}.hero-line .btn{font-size:11px}.section-heading{align-items:flex-start}.section-tag{display:none}.panel{padding:16px}.form-grid{column-gap:9px}.task-actions{justify-content:flex-start}.toolbar{flex-wrap:wrap}.search{width:100%}.task-card{flex-wrap:wrap;gap:11px}.task-buttons{width:100%;padding-left:51px}.task-details{gap:7px}}@media(max-width:420px){.sidebar{align-items:flex-start;gap:10px}.nav-item{font-size:10px}.brand-symbol{height:33px;width:33px}.hero-line .btn{display:none}.form-grid{grid-template-columns:1fr}.field.wide{grid-column:span 1}.header .top-actions{display:none}}
+[hidden]{display:none!important}.ops-section{margin:24px 0;padding:26px;scroll-margin-top:20px}.ops-section .section-heading{margin-bottom:16px}.ops-section .task-list{margin-top:18px}.cloud-form{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end;margin:18px 0}.ops-actions{display:flex;flex-wrap:wrap;gap:10px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compare pre,#audit-result{max-height:280px;overflow:auto;white-space:pre-wrap;word-break:break-all;background:#f1f5f3;padding:12px;font-size:12px}.conflict{border:1px solid #e3ad63;padding:16px;margin:16px 0}.ops-section p{margin:8px 0}.ops-section .task-buttons{flex-wrap:wrap}.cloud-form input{min-width:0}.ops-section input[type=checkbox]{width:auto}@media(max-width:800px){.cloud-form,.compare{grid-template-columns:1fr}.ops-section{padding:16px}.ops-section .section-heading{display:block}.task-buttons{max-width:100%}}@media(max-width:760px){.sidebar{flex-wrap:wrap}.nav{flex-wrap:wrap;max-width:100%}.nav-item{white-space:nowrap}}
+</style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-symbol">↗</div><div><strong>清运智办</strong><span>DISPATCH DESK</span></div></div>
+      <div class="nav-heading">业务工作台</div>
+      <nav class="nav" aria-label="主导航">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">▦</span> 清运总览</button>
+        <button class="nav-item" data-view="tasks"><span class="nav-icon">☷</span> 全部任务 <span class="mini-count" id="sidebar-total">0</span></button>
+        <button class="nav-item" data-view="new"><span class="nav-icon">＋</span> 智能录入</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="safe-dot"></div><div><b id="privacy-mode">本地隐私模式</b><small id="privacy-sub">数据保存在本浏览器，未上传服务器</small></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="header"><div><span class="eyebrow">危废处置 · 清运协调</span><h1 id="page-title">清运工作总览</h1><p id="page-subtitle">把微信通知变成确定的执行计划，重要任务不遗漏。</p></div><div class="top-actions"><span class="date-label" id="today-label"></span><button type="button" class="btn btn-primary" id="open-new">＋ 新建任务</button></div></header>
+
+      <section class="dashboard-top" id="dashboard-top">
+        <div class="metrics">
+          <div class="metric"><div class="metric-head"><span>全部清运需求</span><span class="metric-glyph teal">▤</span></div><div class="metric-value" id="count-all">0</div><small>已录入的任务总数</small></div>
+          <div class="metric"><div class="metric-head"><span>待安排 / 待确认</span><span class="metric-glyph amber">◷</span></div><div class="metric-value" id="count-pending">0</div><small>需要推进的客户需求</small></div>
+          <div class="metric"><div class="metric-head"><span>已安排 / 运输中</span><span class="metric-glyph blue">▰</span></div><div class="metric-value" id="count-scheduled">0</div><small>需要跟踪执行情况</small></div>
+          <div class="metric warning"><div class="metric-head"><span>重点提醒</span><span class="metric-glyph red">!</span></div><div class="metric-value" id="count-alert">0</div><small>临近、逾期或待核实</small></div>
+        </div>
+        <div class="hero-line"><div><span class="hero-label">今日工作提示</span><h2 id="daily-note">今日暂无紧急待办</h2><p id="daily-sub">先把最新的微信消息转成清运任务。</p></div><button class="btn btn-light" id="jump-alerts">查看待办提醒 →</button></div>
+      </section>
+
+      <section class="workspace" id="new-section">
+        <div class="section-heading"><div><div class="eyebrow green">01 / 信息捕获</div><h2>微信消息智能录入</h2><p>复制聊天原文 → 提取字段 → 人工核对 → 保存待办</p></div><span class="section-tag">本地规则解析 · 无需联网</span></div>
+        <div class="entry-grid">
+          <div class="panel clipboard-panel"><div class="panel-title"><span>原始微信通知</span><span class="hint">文字复制后粘贴</span></div><textarea id="raw-message" placeholder="例如：张经理，上海某某电子公司下周一上午要清运废液，预计5吨、20桶，麻烦安排车辆。" spellcheck="false"></textarea><div class="row-between smallgap"><button class="btn btn-soft" id="sample-msg" type="button">填入演示消息</button><button class="btn btn-primary" type="button" id="parse-message">✦ 提取清运信息</button></div><div class="privacy-note">◉ 解析仅在当前设备完成。原始信息保存到任务中，方便后续追溯；录入前请遵守单位信息安全要求。</div></div>
+          <div class="panel form-panel"><div class="panel-title"><span id="form-title">清运任务确认单</span><span class="hint" id="edit-label">请核对后保存</span></div>
+            <form id="task-form" autocomplete="off">
+              <div class="form-grid">
+                <label class="field wide">客户 / 产废企业<input name="customerId" type="hidden"/><datalist id="task-customers"></datalist><input list="task-customers" name="client" placeholder="请输入企业全称" maxlength="100"/></label>
+                <label class="field">计划清运日期<input type="date" name="pickupDate"/></label>
+                <label class="field">预计清运时段<input name="timeWindow" placeholder="上午 / 下午 / 具体时间" maxlength="40"/></label>
+                <label class="field">废物名称<input name="wasteName" placeholder="例如：废液" maxlength="80"/></label>
+                <label class="field">危废类别或代码<input name="wasteCode" placeholder="例如：HW08 / 900-249-08" maxlength="100"/></label>
+                <label class="field">预计重量<input name="weight" placeholder="例如：5吨" maxlength="40"/></label>
+                <label class="field">包装 / 件数<input name="packaging" placeholder="例如：20桶" maxlength="60"/></label>
+                <label class="field">客户联系人<input name="contactName" placeholder="例如：张经理" maxlength="40"/></label>
+                <label class="field">联系电话<input name="phone" placeholder="选填" maxlength="30"/></label>
+                <label class="field wide">清运地址<input name="address" placeholder="客户装货地址" maxlength="200"/></label>
+                <label class="field">任务状态<select name="status"><option>待安排</option><option>待确认</option><option>已安排</option><option>运输中</option><option>已完成</option><option>已取消</option></select></label>
+                <label class="field">任务优先级<select name="priority"><option>普通</option><option>紧急</option></select></label>
+                <label class="field">承运单位<input name="carrier" placeholder="已安排后补录" maxlength="100"/></label>
+                <label class="field">车牌号码<input name="plate" placeholder="已安排后补录" maxlength="30"/></label>
+                <label class="field">驾驶员 / 联系方式<input name="driver" placeholder="选填" maxlength="80"/></label>
+                <label class="field">跟进提醒时间<input type="datetime-local" name="remindAt"/></label>
+                <label class="field wide">执行备注<textarea name="notes" rows="2" placeholder="需要核实的事项、车辆安排反馈、联单进度等" maxlength="1000"></textarea></label>
+              </div>
+              <div id="parse-warnings" class="parse-warnings" hidden></div>
+              <details id="task-trace" hidden><summary>首次原文与操作记录</summary><pre id="task-trace-text" style="white-space:pre-wrap;word-break:break-word"></pre></details>
+              <div class="form-footer"><button class="btn btn-ghost" id="reset-form" type="button">清空表单</button><button class="btn btn-primary" type="submit" id="save-task">保存清运任务</button></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-area" id="tasks-section"><div class="section-heading"><div><div class="eyebrow green">02 / 进度跟踪</div><h2>清运待办清单</h2><p>按紧迫程度排序，跟进每一条需求的执行结果。</p></div><div class="task-actions"><button class="btn btn-soft" type="button" id="export-csv">导出清运计划 CSV</button><button class="btn btn-soft" type="button" id="export-json">备份数据 JSON</button><label class="btn btn-soft file-label" for="import-file">导入备份<input id="import-file" type="file" accept="application/json,.json" hidden/></label></div></div>
+        <div class="toolbar"><div class="filters" id="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="待处理">待处理</button><button class="filter" data-filter="已安排">已安排</button><button class="filter" data-filter="运输中">运输中</button><button class="filter" data-filter="已完成">已完成</button><button class="filter" data-filter="提醒">重点提醒</button></div><input id="search" class="search" type="search" placeholder="搜索客户 / 危废 / 车牌 / 消息"/></div>
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+      </section>
+
+      <footer class="footer"><span>危废清运智能待办助手 · v2.0 开发版</span><span>提醒仅在打开本工具时显示 · 不是电子联单申报或合规判定系统</span></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script>
+/* 危废清运智能待办助手 - 纯本地规则解析器。
+ * 不向第三方上传信息。识别结果只能作为草稿，必须由业务员核对。
+ * Node: require(); Browser: window.DispatchParser; 微信小程序: require('../../utils/parser')
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  if (root) root.DispatchParser = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function toISO(date) { return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()); }
+  function atDay(base, delta) { var d = new Date(base.getFullYear(),base.getMonth(),base.getDate()); d.setDate(d.getDate() + delta); return d; }
+  function validYMD(y,m,d) { var t=new Date(y,m-1,d); return t.getFullYear()===y && t.getMonth()+1===m && t.getDate()===d; }
+  function pickupDate(text, now) {
+    var warnings=[], date='', source='';
+    var m=text.match(/(20\d{2})[年\/.\-](\d{1,2})[月\/.\-](\d{1,2})日?/);
+    if (m) {
+      var y=+m[1], mm=+m[2], dd=+m[3];
+      if (validYMD(y,mm,dd)) date=toISO(new Date(y,mm-1,dd));
+      else warnings.push('消息中的具体日期无效，请人工填写。');
+      source='明确日期';
+    }
+    if (!date) {
+      m=text.match(/(?:^|\D)(\d{1,2})月(\d{1,2})[日号]?/);
+      if (m) {
+        var year=now.getFullYear(), month=+m[1], day=+m[2];
+        if (validYMD(year,month,day)) {
+          var found=new Date(year,month-1,day), diff=(found-atDay(now,0))/86400000;
+          if (diff < -60) {year++; warnings.push('未注明年份，按下一年推测，请核对。');}
+          else warnings.push('原消息未注明年份，请确认。');
+          if(validYMD(year,month,day)) date=toISO(new Date(year,month-1,day));
+        } else warnings.push('消息中的月日不合法，请核对。');
+        source='月日（无年份）';
+      }
+    }
+    if (!date) {
+      var d=null;
+      if (/大后天/.test(text)) { d=atDay(now,3);source='相对日期'; }
+      else if (/后天/.test(text)) { d=atDay(now,2);source='相对日期'; }
+      else if (/明天|明日/.test(text)) { d=atDay(now,1);source='相对日期'; }
+      else if (/今天|今日/.test(text)) { d=atDay(now,0);source='相对日期'; }
+      if(d){ date=toISO(d);warnings.push('相对日期按当前录入日计算；如消息较早，请核对。'); }
+    }
+    if (!date) {
+      m=text.match(/(下下周|下周|本周|这周|周|星期)([一二三四五六日天])/);
+      if(m) {
+        var n={'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'日':7,'天':7}[m[2]], dayOfWeek=now.getDay() || 7;
+        var monday=atDay(now,1-dayOfWeek), shift= m[1]==='下下周'?14:(m[1]==='下周'?7:0);
+        var candidate=atDay(monday,shift+n-1);
+        if(m[1]==='周'||m[1]==='星期') {
+          if(candidate<atDay(now,0)) candidate=atDay(candidate,7);
+          warnings.push('仅写“周几”未指明哪周，已推测最近的对应日期，请核对。');
+        } else if(candidate<atDay(now,0)) warnings.push('消息指定的本周日期已过，请核对。');
+        date=toISO(candidate);source='星期描述';warnings.push('星期描述按当前录入日推算；消息发送日或约定的周次可能不同，请核对。');
+      }
+    }
+    if(!date) warnings.push('未识别到明确清运日期，请人工确认。');
+    return {date:date,source:source,warnings:warnings};
+  }
+  function clean(s) {return String(s||'').replace(/^[\s：:,，；;。]+|[\s：:,，；;。]+$/g,'').trim();}
+  function findClient(text) {
+    var m=text.match(/(?:客户|产废单位|产废企业|单位名称|公司名称|企业)[：:\s]+([^，。；;\n]{2,48})/);
+    if(m) return clean(m[1].replace(/(?:需要|计划|希望|要求|预计|要)?(?:清运|转运|安排|本周|下周|明天|今天).*$/,''));
+    var segments=text.split(/[，,。；;\n]/);
+    for(var i=0;i<segments.length;i++){
+      var part=segments[i].trim();
+      m=part.match(/([^，。；;\n\s]{2,42}?(?:有限责任公司|有限公司|股份公司|电子公司|科技公司|工厂|分厂|公司))(?=需|要|计|预|本|这|下|明|今|的|周|\s|$)/);
+      if(m) return clean(m[1].replace(/^(?:张经理|李经理|王经理|您好|你好|麻烦)[：:,，\s]*/,''));
+    }
+    return '';
+  }
+  function parseMessage(input, referenceDate) {
+    var raw=String(input||'').trim(), now=referenceDate instanceof Date?referenceDate:new Date(referenceDate||Date.now());
+    if(isNaN(now.getTime())) now=new Date();
+    var d=pickupDate(raw,now), warnings=d.warnings.slice();
+    var client=findClient(raw), weight='', packaging='', wasteName='', wasteCode='', timeWindow='', contactName='', phone='', address='';
+    var m=raw.match(/(?:约|大约|大概|预计|合计|共|总计)?\s*(\d+(?:\.\d+)?)\s*(吨|公斤|千克|kg|KG|t)(?!桶)/);
+    if(m) weight=m[1]+(m[2]==='KG'||m[2]==='kg'?'公斤':m[2]==='t'?'吨':m[2]==='千克'?'公斤':m[2]);
+    m=raw.match(/(\d+(?:\.\d+)?)\s*(?:个|只|袋装)?\s*(吨桶|铁桶|塑料桶|桶|袋|箱|托盘|包)/);
+    if(m) packaging=m[1]+m[2];
+    m=raw.match(/(HW\d{2})\b/i);if(m) wasteCode=m[1].toUpperCase();
+    m=raw.match(/\b(\d{3}-\d{3}-\d{2})\b/);if(m) wasteCode=wasteCode? wasteCode+' / '+m[1]:m[1];
+    var known=['废活性炭','废乳化液','废有机溶剂','废包装桶','废切削液','废油漆渣','废溶剂','废油泥','废酸液','废碱液','废电池','废油','废液','污泥','油泥','废酸','废碱','漆渣','废渣'];
+    for(var i=0;i<known.length;i++) if(raw.indexOf(known[i])!==-1){wasteName=known[i];break;}
+    m=raw.match(/(?:危废|危险废物|废物名称|废物品名)[：:\s]+([^，。；;\n\s]{2,24})/);
+    if(m) wasteName=clean(m[1]);
+    m=raw.match(/(上午|下午|中午|早上|晚上|凌晨|全天|夜间)/);if(m) timeWindow=m[1];
+    m=raw.match(/(?:联系人|对接人)[：:\s]+([\u4e00-\u9fa5]{2,5})/);if(m) contactName=m[1];
+    m=raw.match(/\b1[3-9]\d{9}\b/);if(m) phone=m[0];
+    m=raw.match(/(?:地址|地点|装货地点|清运地址)[：:\s]+([^，。；;\n]{3,60})/);if(m) address=clean(m[1]);
+    if (!client) warnings.push('未识别到客户全称，需要手动填写。');
+    if (!weight) warnings.push('未识别到重量（未必代表客户未提供），请核对。');
+    if (!wasteName) warnings.push('未识别到废物名称，请核对。');
+    if (!wasteCode) warnings.push('未识别危废类别/代码，不能据此直接安排合规运输。');
+    if (timeWindow && !/\d{1,2}[：:]\d{2}/.test(raw)) warnings.push('只识别到时段，未明确具体时间。');
+    var priority=/紧急|加急|尽快|马上|急需|务必/.test(raw)?'紧急':'普通';
+    var exactTime='';m=raw.match(/(?:上午|下午|中午|早上|晚上)?\s*(\d{1,2})[:：](\d{2})/);
+    if(m && +m[1]<24 && +m[2]<60) {
+      var hh=+m[1], mm=+m[2];
+      var leading=raw.slice(Math.max(0,m.index-5),m.index)+m[0];
+      if((/下午|晚上/.test(leading)) && hh<12) hh+=12;
+      if(/中午/.test(leading) && hh<11) hh+=12;
+      exactTime=pad(hh)+':'+pad(mm);
+    }
+    return {
+      client:client, pickupDate:d.date, timeWindow:timeWindow, exactTime:exactTime,
+      weight:weight, packaging:packaging, wasteName:wasteName, wasteCode:wasteCode,
+      contactName:contactName, phone:phone, address:address,
+      priority:priority, rawMessage:raw, warnings:warnings, dateInterpretation:d.source
+    };
+  }
+  return { parseMessage:parseMessage, pickupDate:pickupDate, toISO:toISO };
+});
+
+</script>
+  <script>
+/* Shared reminder rules. All business dates use Asia/Shanghai (UTC+8). */
+(function(root,factory){const api=factory();if(typeof module!=='undefined'&&module.exports)module.exports=api;if(root)root.DispatchReminders=api})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';
+ function chinaTime(date){return new Date((date||new Date()).getTime()+8*3600000).toISOString().slice(0,16)}
+ function remindersFor(tasks,states,now){
+  now=now||new Date();const local=chinaTime(now),day=local.slice(0,10),out=[];states=states||[];
+  for(const t of tasks){
+   if(t.deleted||['已完成','已取消'].includes(t.status))continue;
+   if(states.some(s=>!s.deleted&&s.taskId===t.id&&s.snoozedUntil&&new Date(s.snoozedUntil).getTime()>now.getTime()))continue;
+   const rules=[];
+   if(t.remindAt&&t.remindAt<=local)rules.push({rule:'跟进',level:3,key:t.remindAt});
+   if(t.pickupDate&&t.pickupDate<day)rules.push({rule:'逾期',level:3,key:t.pickupDate+':'+day});
+   else if(!t.pickupDate)rules.push({rule:'待核实日期',level:2,key:'undated'});
+   else if(['待安排','待确认'].includes(t.status)){
+    const d=Math.round((Date.parse(t.pickupDate+'T00:00:00Z')-Date.parse(day+'T00:00:00Z'))/86400000);
+    if(d>=0&&d<=2)rules.push({rule:d===2?'D-2':d===1?'D-1':'当天',level:t.status==='待确认'?3:2,key:t.pickupDate});
+   }
+   for(const r of rules){const id=t.id+'|'+r.rule+'|'+r.key;const s=states.find(x=>!x.deleted&&x.reminderKey===id)||{};
+    if(s.handledAt)continue;
+    out.push({id,taskId:t.id,client:t.client||'待核实客户',pickupDate:t.pickupDate||'',status:t.status,rule:r.rule,level:r.level,unread:!s.readAt,label:r.rule==='逾期'?'计划已过期，请核实进展':r.rule==='跟进'?'自定义跟进时间已到':r.rule==='待核实日期'?'请确认清运日期':r.rule+' · '+(t.status==='待确认'?'请确认安排':'尚待安排')});
+   }
+  }
+  return out.sort((a,b)=>b.level-a.level||String(a.pickupDate).localeCompare(String(b.pickupDate)));
+ }
+ function stateId(key){let a=2166136261,b=5381;for(let i=0;i<key.length;i++){a=Math.imul(a^key.charCodeAt(i),16777619);b=Math.imul(b,33)^key.charCodeAt(i)}return 'state_'+(a>>>0).toString(16)+'_'+(b>>>0).toString(16)+'_'+key.length}
+ return {chinaTime,remindersFor,stateId};
+});
+
+</script><script>
+/* Offline-first store; cloud accounts use separate namespaces. No automatic legacy upload. */
+(function(root,factory){const api=factory();if(typeof module!=='undefined'&&module.exports)module.exports=api;if(root)root.DispatchRepository=api})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';const kinds=['tasks','customers','reminderStates'];
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ const id=()=> 'op_'+Date.now()+'_'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+ function createRepository(storage){
+  let connection=null,busy=false,staged=null;
+  const localKey=k=>k==='tasks'?'hazwaste_dispatch_v1':'hazwaste_dispatch_v2_'+k;
+  const key=()=> 'hazwaste_cloud_v2:'+connection.scope;
+  const read=()=>staged||clone(storage.get(key())||{tasks:[],customers:[],reminderStates:[],queue:[],conflicts:[]});
+  const write=s=>{if(staged)staged=s;else storage.set(key(),s)};
+  function list(kind){return clone((connection?read()[kind]:storage.get(localKey(kind)))||[]).filter(x=>!x.deleted)}
+  function save(kind,next){
+   if(!kinds.includes(kind))throw Error('未知数据类型');
+   if(!connection){storage.set(localKey(kind),clone(next));return}
+   const s=read(),old=s[kind]||[],stamp=new Date().toISOString();
+   const wanted=new Map(next.map(x=>[x.id,x]));
+   for(const record of next){const before=old.find(x=>x.id===record.id);if(!before||JSON.stringify(before)!==JSON.stringify(record)){
+    if(s.conflicts.some(c=>c.kind===kind&&c.id===record.id))throw Error('请先处理该记录的同步冲突');
+    s.queue.push({kind,id:record.id,method:'PUT',record:clone(record),baseRevision:s.queue.some(q=>q.kind===kind&&q.id===record.id)?null:(before&&before.revision||0),operationId:id()});
+   }}
+   for(const before of old){if(!before.deleted&&!wanted.has(before.id)){
+    if(s.conflicts.some(c=>c.kind===kind&&c.id===before.id))throw Error('请先处理该记录的同步冲突');
+    s.queue.push({kind,id:before.id,method:'DELETE',baseRevision:s.queue.some(q=>q.kind===kind&&q.id===before.id)?null:(before.revision||0),operationId:id()});
+   }}
+   s[kind]=clone(next).concat(old.filter(x=>!wanted.has(x.id)).map(x=>({...x,deleted:true,updatedAt:stamp})));write(s);
+  }
+  function status(){const s=connection?read():{queue:[],conflicts:[]};return {connected:!!connection,scope:connection&&connection.scope,pending:s.queue.length,conflicts:clone(s.conflicts),lastSync:s.lastSync||''}}
+  async function sync(){
+   if(!connection)throw Error('请先登录云端');if(busy)return status();busy=true;const current=connection;
+   try{
+    let failure=null;
+    for(const queued of read().queue.slice()){
+     if(current!==connection)throw Error('账户已切换，同步已停止');
+     let s=read();if(s.conflicts.some(c=>c.kind===queued.kind&&c.id===queued.id))continue;
+     const q=s.queue.find(x=>x.operationId===queued.operationId);if(!q)continue;
+     if(q.baseRevision===null){q.baseRevision=(s[q.kind].find(x=>x.id===q.id)||{}).revision||0;write(s)}
+     try{
+      const result=await current.request('/api/'+q.kind+'/'+encodeURIComponent(q.id),q.method,{record:q.record,baseRevision:q.baseRevision,operationId:q.operationId,allowDuplicate:q.allowDuplicate||false});
+      if(current!==connection)throw Error('账户已切换');s=read();s.queue=s.queue.filter(x=>x.operationId!==q.operationId);
+      const newer=s.queue.some(x=>x.kind===q.kind&&x.id===q.id),idx=s[q.kind].findIndex(x=>x.id===q.id);
+      if(idx>=0)s[q.kind][idx]=newer?{...s[q.kind][idx],revision:result.record.revision}:result.record;else s[q.kind].push(result.record);write(s);
+     }catch(e){
+      if(current!==connection)throw e;
+      if(e.status===409){s=read();s.conflicts.push({kind:q.kind,id:q.id,local:s[q.kind].find(x=>x.id===q.id),remote:e.details&&e.details.remote||null,message:e.message});write(s)}
+      else {failure=e;break}
+     }
+    }
+    if(failure)throw failure;
+    // Fetch complete snapshots before merging; a partial/failed pull never removes cached data.
+    const snapshots={};for(const kind of kinds){const all=[];let cursor='';do{const page=await current.request('/api/sync?kind='+kind+'&cursor='+encodeURIComponent(cursor),'GET');all.push(...page.items);cursor=page.nextCursor||''}while(cursor);snapshots[kind]=all}
+    if(current!==connection)throw Error('账户已切换');const s=read();for(const kind of kinds){const protectedIds=new Set(s.queue.filter(x=>x.kind===kind).map(x=>x.id));s[kind]=snapshots[kind].filter(x=>!protectedIds.has(x.id)).concat(s[kind].filter(x=>protectedIds.has(x.id)))}s.lastSync=new Date().toISOString();write(s);return status();
+   }finally{busy=false}
+  }
+  function resolve(kind,recordId,choice){const s=read(),c=s.conflicts.find(x=>x.kind===kind&&x.id===recordId);if(!c)return;
+   s.queue=s.queue.filter(q=>!(q.kind===kind&&q.id===recordId));s.conflicts=s.conflicts.filter(x=>x!==c);s[kind]=s[kind].filter(x=>x.id!==recordId);
+   if(choice==='remote'){if(c.remote)s[kind].push(c.remote)}
+   else{const record=c.local;s[kind].push(record);s.queue.push({kind,id:recordId,method:record.deleted?'DELETE':'PUT',record,baseRevision:c.remote&&c.remote.revision||0,operationId:id(),allowDuplicate:true})}write(s);
+  }
+  function saveMany(next){if(connection){staged=clone(read());try{for(const kind of ['customers','tasks','reminderStates'])if(next[kind])save(kind,next[kind]);storage.set(key(),staged)}finally{staged=null}}else{const before={};for(const kind of kinds)before[kind]=storage.get(localKey(kind))||[];try{for(const kind of kinds)if(next[kind])save(kind,next[kind])}catch(e){for(const kind of kinds)storage.set(localKey(kind),before[kind]);throw e}}}
+  return {list,save,saveMany,status,sync,resolve,connect(c){if(busy)throw Error('请等待当前同步结束');connection=c;const s=read();for(const k of kinds)s[k]=s[k]||[];s.queue=s.queue||[];s.conflicts=s.conflicts||[];write(s)},disconnect(){if(busy)throw Error('请等待同步结束');connection=null},legacy(){return {tasks:clone(storage.get(localKey('tasks'))||[]),customers:clone(storage.get(localKey('customers'))||[])}},id};
+ }
+ return {createRepository};
+});
+
+</script><script>
+(function(root,factory){const api=factory();if(typeof module!=='undefined'&&module.exports)module.exports=api;if(root)root.DispatchBackup=api})(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';const statuses=['待安排','待确认','已安排','运输中','已完成','已取消'];
+const fields={tasks:['client','customerId','pickupDate','timeWindow','wasteName','wasteCode','weight','weightUnit','actualWeight','packaging','packageCount','contactName','phone','address','status','priority','carrier','plate','driver','remindAt','notes','rawMessage','originalMessage','source','dateInterpretation','verificationStatus','createdAt','updatedAt'],customers:['name','contactName','phone','address','contractExpiry','wasteNotes','notes'],reminderStates:['taskId','reminderKey','readAt','handledAt','snoozedUntil']};
+function validate(input){if(!input||input.format!=='hazwaste-dispatch-backup'||input.version!==1||!Array.isArray(input.tasks))throw Error('备份格式不匹配');const result={};for(const kind of Object.keys(fields)){const rows=input[kind]||[];if(!Array.isArray(rows)||rows.length>5000)throw Error('备份条数或格式错误');const seen=new Set();result[kind]=rows.map(x=>{if(!x||Array.isArray(x)||typeof x!=='object'||typeof x.id!=='string'||!/^[a-zA-Z0-9_-]{4,100}$/.test(x.id))throw Error('备份记录ID无效');if(seen.has(x.id))throw Error('备份内部存在重复ID');seen.add(x.id);const o={id:x.id};for(const k of fields[kind]){if(x[k]!==undefined&&typeof x[k]!=='string')throw Error('备份字段格式错误');o[k]=String(x[k]||'').slice(0,k==='rawMessage'||k==='originalMessage'?10000:k==='notes'||k==='wasteNotes'?2000:500)}if(kind==='tasks'){if(!o.client&&!o.rawMessage)throw Error('备份存在空任务');if(!statuses.includes(o.status))o.status='待确认';if(!['普通','紧急'].includes(o.priority))o.priority='普通';o.history=Array.isArray(x.history)?x.history.slice(-50).map(h=>({at:String(h.at||'').slice(0,40),action:String(h.action||'').slice(0,150)})):[];o.legacyHistory=Array.isArray(x.legacyHistory)?x.legacyHistory.slice(-50).map(h=>({at:String(h.at||'').slice(0,40),action:String(h.action||'').slice(0,150)})):[]}if(kind==='customers'){if(!o.name.trim())throw Error('客户名称为空');o.aliases=Array.isArray(x.aliases)?x.aliases.filter(a=>typeof a==='string').slice(0,30).map(a=>a.slice(0,100)):[]}return o})}return result}
+function restore(repo,input){const incoming=validate(input),before={};for(const k of Object.keys(fields))before[k]=repo.list(k);const ids=new Set([...before.customers,...incoming.customers].map(c=>c.id));for(const t of incoming.tasks)if(t.customerId&&!ids.has(t.customerId))throw Error('任务关联客户不在备份或当前数据中，请使用完整备份');const taskIds=new Set([...before.tasks,...incoming.tasks].map(t=>t.id));for(const r of incoming.reminderStates)if(!taskIds.has(r.taskId))throw Error('提醒关联任务不存在');const next={};let count=0;for(const k of ['customers','tasks','reminderStates']){const exists=new Set(before[k].map(x=>x.id));const added=incoming[k].filter(x=>!exists.has(x.id));count+=added.length;if(before[k].length+added.length>5000)throw Error('导入后超过5000条');next[k]=[...added,...before[k]]}repo.saveMany(next);return count}
+return {validate,restore};
+});
+
+</script><script>
+(function(){
+'use strict';
+const storage={get(k){const v=localStorage.getItem(k);return v?JSON.parse(v):undefined},set(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+const repo=DispatchRepository.createRepository(storage);let session=null;
+const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function changed(){window.dispatchEvent(new Event('dispatch-data-change'));render()}
+function message(text){$('#cloud-message').textContent=text}
+function validUrl(value){const u=new URL(value);if(u.username||u.password||u.search||u.hash||!['','/'].includes(u.pathname))throw Error('请填写服务根地址，不含路径或账号');if(u.protocol!=='https:'&&!(u.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(u.hostname)))throw Error('远程同步必须使用 HTTPS');return u.origin}
+async function request(route,method='GET',data,credentials){const s=credentials||session;if(!s)throw Error('请先登录');const r=await fetch(s.url+route,{method,headers:{'Content-Type':'application/json',...(s.token?{Authorization:'Bearer '+s.token}:{})},body:data===undefined?undefined:JSON.stringify(data),signal:AbortSignal.timeout(20000)});let b;try{b=await r.json()}catch(e){throw Error('服务未返回有效响应')}if(!r.ok){const e=Error(b.error||'请求失败');e.status=r.status;e.details=b.details;throw e}return b}
+async function authorizeManagement(action){if(!session)return;const r=await request('/api/management/authorize','POST',{action});if(!r.allowed||r.user.role!=='admin')throw Error('此操作仅限管理员');session.user=r.user;render()}
+function download(name,data){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+async function sync(){try{message('正在同步…');await repo.sync();changed();message('同步结束：待上传 '+repo.status().pending+' 条；冲突 '+repo.status().conflicts.length+' 条')}catch(e){message(e.message+'；本机草稿和上传队列已保留');render()}}
+function reminders(){return DispatchReminders.remindersFor(repo.list('tasks'),repo.list('reminderStates'))}
+function stateId(key){const existing=repo.list('reminderStates').find(s=>s.reminderKey===key);return existing?existing.id:DispatchReminders.stateId(key)}
+function handleReminder(reminder,action){const all=repo.list('reminderStates'),key=action==='snooze'?'snooze:'+reminder.taskId:reminder.id,id=stateId(key);const before=all.find(x=>x.id===id)||{};const next={...before,id,taskId:reminder.taskId,reminderKey:key};if(action==='snooze')next.snoozedUntil=new Date(Date.now()+3600000).toISOString();else{next.readAt=new Date().toISOString();if(action==='handled')next.handledAt=next.readAt}repo.save('reminderStates',[...all.filter(x=>x.id!==id),next]);changed()}
+function render(){
+ const s=repo.status(),all=reminders(),unread=all.filter(r=>r.unread).length;
+ $('#sync-status').textContent=s.connected?(session.user.username+' / '+session.user.orgId+' · 待上传 '+s.pending+' · 冲突 '+s.conflicts.length+' · '+(s.lastSync?'上次 '+new Date(s.lastSync).toLocaleString('zh-CN'):'尚未完成同步')):'当前为本地模式；登录不会上传原有数据';
+ const manage=!s.connected||session.user.role==='admin';$('#export-json').hidden=!manage;$('#import-file').closest('label').hidden=!manage;$('#migrate-local').hidden=!s.connected||!manage;$('#rollback-migration').hidden=!s.connected||!manage;
+ $('#cloud-login').hidden=s.connected;$('#sync-now').disabled=!s.connected;$('#logout').disabled=!s.connected;$('#migrate-local').disabled=!s.connected;$('#rollback-migration').disabled=!s.connected;
+ $('#privacy-mode').textContent=s.connected?'企业同步模式':'本地隐私模式';$('#privacy-sub').textContent=s.connected?'草稿保存在本机，点击同步上传到指定服务':'数据保存在本浏览器，未上传服务器';
+ $('#reminder-unread').textContent=unread;const onlyUnread=$('#only-unread').checked;
+ $('#reminder-list').innerHTML=all.filter(r=>!onlyUnread||r.unread).map(r=>`<article class="task-card"><div class="task-main"><b>${esc(r.client)}</b> <span class="tag ${r.unread?'overdue':'soon'}">${r.unread?'未读':'已读'}</span><p>${esc(r.label)} · ${esc(r.pickupDate||'日期待核实')}</p><small>标记已跟进只关闭本次提醒；推进任务状态请打开详情。</small></div><div class="task-buttons"><button data-reminder="open" data-id="${esc(r.id)}">任务详情</button><button data-reminder="read" data-id="${esc(r.id)}">标为已读</button><button data-reminder="snooze" data-id="${esc(r.id)}">稍后1小时</button><button data-reminder="handled" data-id="${esc(r.id)}">本次已跟进</button></div></article>`).join('')||'<p class="privacy-note">当前没有'+(onlyUnread?'未读':'待处理')+'提醒。</p>';
+ const q=$('#customer-search').value.trim().toLowerCase(),tasks=repo.list('tasks');const customers=repo.list('customers');
+ $('#customer-list').innerHTML=customers.filter(c=>[c.name,...c.aliases||[],c.contactName,c.phone,c.address].join(' ').toLowerCase().includes(q)).map(c=>{const history=tasks.filter(t=>t.customerId===c.id||(!t.customerId&&[c.name,...c.aliases||[]].includes(t.client)));return `<article class="task-card"><div class="task-main"><b>${esc(c.name)}</b><p>${esc((c.aliases||[]).join(' / '))}</p><small>${esc(c.contactName)} · ${esc(c.phone?c.phone.replace(/(.{3}).*(.{4})/,'$1****$2'):'电话未填')} · ${history.length}条历史清运</small><p>${esc(c.address)}</p>${c.contractExpiry?`<small class="${c.contractExpiry<DispatchReminders.chinaTime().slice(0,10)?'danger-text':''}">合同到期：${esc(c.contractExpiry)}（需人工核实）</small>`:''}</div><div class="task-buttons"><button data-customer="use" data-id="${esc(c.id)}">用于新任务</button><button data-customer="history" data-id="${esc(c.id)}">历史清运</button><button data-customer="edit" data-id="${esc(c.id)}">编辑档案</button><button data-customer="delete" data-id="${esc(c.id)}">删除</button></div></article>`}).join('')||'<p class="privacy-note">暂无匹配客户。请只维护单位授权的客户资料。</p>';
+ $('#task-customers').innerHTML=customers.map(c=>`<option value="${esc(c.name)}">${esc((c.aliases||[]).join(' / '))}</option>`).join('');
+ $('#sync-conflicts').innerHTML=s.conflicts.map((c,i)=>`<article class="conflict"><b>需核对：${esc(c.message)}</b><div class="compare"><pre>本机版本\n${esc(JSON.stringify(c.local,null,2))}</pre><pre>云端版本\n${esc(JSON.stringify(c.remote,null,2))}</pre></div><button data-conflict="remote" data-index="${i}">采用云端版本</button> <button data-conflict="local" data-index="${i}">确认保留本地并重新提交</button></article>`).join('');
+}
+window.DispatchData={repo,request,changed,reminders,authorizeManagement,async sync(){return sync()},taskCustomer(task){const value=String(task.client||'').trim();const customer=repo.list('customers').find(c=>[c.name,...c.aliases||[]].includes(value));return customer?{...task,client:customer.name,customerId:customer.id}:task},backup(){return {format:'hazwaste-dispatch-backup',version:1,extensionVersion:2,exportedAt:new Date().toISOString(),scope:session?{userId:session.user.id,orgId:session.user.orgId,url:session.url}:'local',tasks:repo.list('tasks'),customers:repo.list('customers'),reminderStates:repo.list('reminderStates')}}};
+const panel=document.createElement('div');panel.innerHTML=`
+<section class="ops-section panel" id="sync-section"><div class="section-heading"><div><div class="eyebrow green">企业数据 / 同步</div><h2>云端同步</h2><p id="sync-status"></p></div></div>
+<p class="privacy-note">仅连接单位批准的服务。登录后使用独立账户缓存；原有本地任务需先备份再主动迁移。免安装页面离线可用；云端请打开相应服务域名下的工作台。</p>
+<form id="cloud-login" class="cloud-form"><label class="field">服务地址<input id="cloud-url" placeholder="https://dispatch.example.com" required/></label><label class="field">业务员账号<input id="cloud-user" autocomplete="username" required/></label><label class="field">密码<input id="cloud-password" type="password" autocomplete="current-password" required/></label><button class="btn btn-primary">登录云端</button></form>
+<div class="ops-actions"><button class="btn btn-soft" id="sync-now">立即同步</button><button class="btn btn-soft" id="logout">返回本地模式</button><button class="btn btn-soft" id="migrate-local">备份并迁移旧任务</button><button class="btn btn-ghost" id="rollback-migration">回滚迁移批次</button><button class="btn btn-ghost" id="audit-log">查看操作审计</button></div><p id="cloud-message" role="status" class="privacy-note"></p><div id="sync-conflicts"></div><pre id="audit-result" hidden></pre></section>
+<section class="ops-section panel" id="customers-section"><div class="section-heading"><div><div class="eyebrow green">客户主数据</div><h2>客户管理</h2><p>企业全称与别名统一；已有任务资料保留历史快照。</p></div><input class="search" id="customer-search" placeholder="查找企业、别名、电话"/></div>
+<form id="customer-form"><input name="id" type="hidden"/><div class="form-grid"><label class="field">企业全称<input name="name" required maxlength="100"/></label><label class="field">别名（用逗号分隔）<input name="aliases" maxlength="500"/></label><label class="field">联系人<input name="contactName" maxlength="100"/></label><label class="field">联系电话<input name="phone" maxlength="40"/></label><label class="field">装货地址<input name="address" maxlength="300"/></label><label class="field">合同有效期<input name="contractExpiry" type="date"/></label><label class="field wide">已核实的废物与包装信息<textarea name="wasteNotes" maxlength="2000" placeholder="缺失信息保持待核实；这里不作资质或合规判定"></textarea></label></div><div class="form-footer"><button class="btn btn-ghost" id="customer-reset" type="reset">新建 / 清空</button><button class="btn btn-primary">保存客户档案</button></div></form><div id="customer-list" class="task-list"></div></section>
+<section class="ops-section panel" id="reminders-section"><div class="section-heading"><div><div class="eyebrow green">清运跟进</div><h2>提醒中心 <span class="tag overdue" id="reminder-unread">0</span></h2><p>D-2 / D-1 / 当天分级提醒、逾期每日汇总与自定义跟进。</p></div><label><input id="only-unread" type="checkbox"/> 只看未读</label></div><p class="privacy-note">微信通知须在小程序主动订阅，且后台完成配置并持续运行；通知只显示待办数量，客户详情在登录后查看。应用内提醒无需订阅。</p><div id="reminder-list" class="task-list"></div></section>`;
+$('#new-section').before(panel);const nav=$('.nav');for(const [anchor,text] of [['customers','客户管理'],['reminders','提醒中心'],['sync','云端同步']]){const b=document.createElement('button');b.className='nav-item';b.textContent=text;b.onclick=()=>$('#'+anchor+'-section').scrollIntoView({behavior:'smooth'});nav.appendChild(b)}
+$('#cloud-url').value=location.protocol.startsWith('http')?location.origin:'';
+$('#cloud-login').onsubmit=async e=>{e.preventDefault();if(repo.status().connected){message('请先返回本地模式，再切换账号');return}try{const url=validUrl($('#cloud-url').value.trim());if(location.protocol==='file:')throw Error('请在该服务的 /web/ 地址登录；离线文件不向远端跨站发送客户数据');if(url!==location.origin)throw Error('请先在浏览器打开 '+url+'/web/ 再登录');const result=await request('/api/auth/login','POST',{username:$('#cloud-user').value.trim(),password:$('#cloud-password').value},{url});session={url,token:result.token,user:result.user};$('#cloud-password').value='';repo.connect({scope:url+':'+result.user.orgId+':'+result.user.id,request});sessionStorage.setItem('dispatch_session_v2',JSON.stringify(session));changed();await sync()}catch(err){message(err.message)}};
+$('#sync-now').onclick=sync;$('#logout').onclick=async()=>{try{if(session){try{await request('/api/auth/logout','POST',{})}catch(e){/* The token also expires server-side after 12h. */}}repo.disconnect();session=null;sessionStorage.removeItem('dispatch_session_v2');changed();message('已回到原有本地数据；账户草稿仍保存在独立缓存中')}catch(e){message(e.message)}};
+$('#migrate-local').onclick=async()=>{try{await authorizeManagement('migration');const legacy=repo.legacy();if(!legacy.tasks.length&&!legacy.customers.length)throw Error('此浏览器没有可迁移的本地数据');if(repo.status().pending)throw Error('请先完成草稿同步');if(!confirm('将备份并把本浏览器旧任务与客户资料上传至当前单位服务。确认已获单位授权，且备份下载已允许？'))return;download('清运智办_迁移前本地备份.json',{format:'hazwaste-dispatch-backup',version:1,...legacy});if(legacy.tasks.length+legacy.customers.length>500)throw Error('当前迁移上限500条，请按部署文档分批导入，备份已导出');const migration=await request('/api/migrations','POST',{batchId:repo.id(),...legacy});download('清运智办_迁移回执_'+migration.batchId+'.json',migration);message('已创建 '+migration.created.length+' 条，去重 '+migration.skipped.length+' 条。回滚批次：'+migration.batchId);await repo.sync();changed()}catch(e){message(e.message+'；本地旧数据仍保留')}};
+$('#rollback-migration').onclick=async()=>{try{await authorizeManagement('rollback')}catch(e){message(e.message);return}const batch=prompt('输入迁移回执中的批次ID。只有未被后续修改的记录可整批回滚。');if(!batch)return;try{await request('/api/migrations/'+encodeURIComponent(batch)+'/rollback','POST',{});await repo.sync();changed();message('已回滚此批次新增记录，本地旧数据保留')}catch(e){message(e.message)}};
+$('#audit-log').onclick=async()=>{try{const r=await request('/api/audit');$('#audit-result').hidden=false;$('#audit-result').textContent=JSON.stringify(r.items,null,2)}catch(e){message(e.message)}};
+$('#sync-conflicts').onclick=e=>{const b=e.target.closest('[data-conflict]');if(!b)return;const c=repo.status().conflicts[Number(b.dataset.index)];try{if(b.dataset.conflict==='local'&&!confirm('请核对双方版本。确定用本地内容重新提交（仍会检查修订号）？'))return;repo.resolve(c.kind,c.id,b.dataset.conflict);changed()}catch(e){message(e.message)}};
+$('#customer-search').oninput=render;$('#only-unread').onchange=render;
+$('#customer-form').onsubmit=e=>{e.preventDefault();try{const f=e.target.elements,customers=repo.list('customers'),id=f.namedItem('id').value||repo.id(),before=customers.find(x=>x.id===id)||{},c={...before,id};for(const k of ['name','contactName','phone','address','contractExpiry','wasteNotes'])c[k]=f.namedItem(k).value.trim();c.aliases=f.namedItem('aliases').value.split(/[,，]/).map(x=>x.trim()).filter(Boolean);if(customers.some(x=>x.id!==id&&x.name===c.name))throw Error('已存在同名客户，请编辑原档案');repo.save('customers',[c,...customers.filter(x=>x.id!==id)]);e.target.reset();changed();message('客户档案已保存'+(session?'，待同步':''))}catch(e){message(e.message)}};
+$('#customer-list').onclick=e=>{const b=e.target.closest('[data-customer]');if(!b)return;const c=repo.list('customers').find(x=>x.id===b.dataset.id);if(!c)return;try{const action=b.dataset.customer;if(action==='edit'){const form=$('#customer-form');for(const k of ['id','name','contactName','phone','address','contractExpiry','wasteNotes'])form.elements.namedItem(k).value=c[k]||'';form.elements.namedItem('aliases').value=(c.aliases||[]).join('，');form.scrollIntoView({behavior:'smooth'})}else if(action==='delete'){if(repo.list('tasks').some(t=>t.customerId===c.id))throw Error('客户有关联任务，请先保留档案或解除任务关联');if(confirm('删除客户档案？历史任务原文仍保留。')){repo.save('customers',repo.list('customers').filter(x=>x.id!==c.id));changed()}}else if(action==='use'){window.dispatchEvent(new CustomEvent('dispatch-use-customer',{detail:c}))}else{window.dispatchEvent(new CustomEvent('dispatch-customer-history',{detail:c}))}}catch(e){message(e.message)}};
+$('#reminder-list').onclick=e=>{const b=e.target.closest('[data-reminder]');if(!b)return;const r=reminders().find(x=>x.id===b.dataset.id);if(!r)return;try{if(b.dataset.reminder==='open')window.dispatchEvent(new CustomEvent('dispatch-open-task',{detail:r.taskId}));else handleReminder(r,b.dataset.reminder)}catch(e){message(e.message)}};
+setInterval(()=>{render()},60000);
+try{const saved=JSON.parse(sessionStorage.getItem('dispatch_session_v2')||'null');if(saved){session=saved;repo.connect({scope:saved.url+':'+saved.user.orgId+':'+saved.user.id,request})}}catch(e){session=null;message('账户缓存无法读取，请重新登录')}
+render();
+})();
+
+</script><script>
+(function(){
+'use strict';
+const KEY='hazwaste_dispatch_v1';
+const STATUSES=['待安排','待确认','已安排','运输中','已完成','已取消'];
+const FORM_FIELDS=['customerId','client','pickupDate','timeWindow','wasteName','wasteCode','weight','packaging','contactName','phone','address','status','priority','carrier','plate','driver','remindAt','notes'];
+const MAX_ITEMS=5000;
+const $=(q)=>document.querySelector(q);
+const esc=(v)=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>DispatchReminders.chinaTime().slice(0,10);
+const nowLocal=()=>DispatchReminders.chinaTime();
+const uuid=()=>typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():'id_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+let customerHistory=null; let tasks=[], filter='全部', editingId=null, toastTimer=null;
+function load(){try{let data=DispatchData.repo.list('tasks');return Array.isArray(data)?data:[]}catch(e){notify('无法读取本地任务，请检查浏览器数据。',true);return []}}
+function persist(next){try{DispatchData.repo.save('tasks',next);tasks=next;DispatchData.changed();return true}catch(e){notify('保存失败：浏览器存储可能已满或不可用，请导出备份。',true);return false}}
+function notify(message,isError=false){const el=$('#toast');el.textContent=message;el.className='toast'+(isError?' error':'');el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3500)}
+function alertFor(t){if(['已完成','已取消'].includes(t.status))return null;const current=today();if(t.remindAt&&t.remindAt<=nowLocal())return {level:3,label:'跟进提醒已到期'};if(t.pickupDate&&t.pickupDate<current)return {level:3,label:'清运计划已过期 · 核实进展'};if(!t.pickupDate)return {level:2,label:'待确认清运日期'};const dayDiff=Math.round((new Date(t.pickupDate+'T00:00:00')-new Date(current+'T00:00:00'))/86400000);if(dayDiff>=0&&dayDiff<=2&&['待安排','待确认'].includes(t.status))return {level:2,label:dayDiff===0?'今天待安排':dayDiff===1?'明天待安排':'两天内待安排'};if(!t.client||t.client==='待核实客户')return {level:1,label:'待确认客户信息'};return null}
+function sorted(list){return list.slice().sort((a,b)=>{const aa=alertFor(a),bb=alertFor(b);if((aa?aa.level:0)!==(bb?bb.level:0))return (bb?bb.level:0)-(aa?aa.level:0);const ad=a.pickupDate||'9999-12-31',bd=b.pickupDate||'9999-12-31';if(ad!==bd)return ad.localeCompare(bd);return String(b.createdAt).localeCompare(String(a.createdAt))})}
+function count(){const pending=tasks.filter(t=>['待安排','待确认'].includes(t.status)).length;const scheduled=tasks.filter(t=>['已安排','运输中'].includes(t.status)).length;const alerts=tasks.filter(t=>alertFor(t)).length;$('#count-all').textContent=tasks.length;$('#count-pending').textContent=pending;$('#count-scheduled').textContent=scheduled;$('#count-alert').textContent=alerts;$('#sidebar-total').textContent=tasks.length;$('#daily-note').textContent=alerts?`有 ${alerts} 条清运任务需要重点关注`:'今日暂无紧急待办';$('#daily-sub').textContent=alerts?'建议先核对逾期、临近清运和提醒到期的事项。':'接到新的微信清运通知后，先登记再安排。'}
+function statusTag(status){return `<span class="tag status-${esc(status)}">${esc(status)}</span>`}
+function draw(){count();const q=$('#search').value.trim().toLowerCase();const visible=sorted(tasks.filter(t=>{const alert=!!alertFor(t);const customerMatch=!customerHistory||t.customerId===customerHistory.id||[customerHistory.name,...customerHistory.aliases||[]].includes(t.client);const statusMatch=filter==='全部'||(filter==='待处理'&&['待安排','待确认'].includes(t.status))||(filter==='提醒'&&alert)||t.status===filter;const content=[t.client,t.wasteName,t.wasteCode,t.plate,t.carrier,t.rawMessage,t.phone].join(' ').toLowerCase();return customerMatch&&statusMatch&&(!q||content.includes(q))}));
+$('#task-list').innerHTML=visible.length?visible.map(t=>{
+  const warning=alertFor(t),next={'待安排':'待确认','待确认':'已安排','已安排':'运输中','运输中':'已完成'}[t.status];
+  const attention=warning?`<span class="tag ${warning.level>=3?'overdue':'soon'}">${esc(warning.label)}</span>`:'';
+  return `<article class="task-card"><div class="task-mark">♧</div><div class="task-main"><div class="task-title"><span class="client">${esc(t.client||'待核实客户')}</span>${statusTag(t.status)}${t.priority==='紧急'?'<span class="tag urgent">紧急</span>':''}${attention}</div><div class="task-details"><span>◷ ${esc(t.pickupDate||'日期待定')}${t.timeWindow?' · '+esc(t.timeWindow):''}</span><span>◇ ${esc(t.wasteName||'废物待确认')}</span><span>⚖ ${esc(t.weight||'重量待确认')}</span>${t.carrier?'<span>▣ '+esc(t.carrier)+'</span>':''}${t.plate?'<span>车牌 '+esc(t.plate)+'</span>':''}</div></div><div class="task-buttons"><button data-action="edit" data-id="${esc(t.id)}">编辑详情</button>${next?`<button data-action="next" data-id="${esc(t.id)}">→ ${esc(next)}</button>`:''}<button class="danger-text" data-action="delete" data-id="${esc(t.id)}">删除</button></div></article>`;
+}).join(''):`<div class="empty"><div class="empty-icon">▤</div><h3>${tasks.length?'当前筛选下没有任务':'还没有清运任务'}</h3><p>${tasks.length?'试着调整筛选条件。':'复制一条微信消息，点击“提取清运信息”并保存。'}</p></div>`}
+function resetForm(){editingId=null;try{localStorage.removeItem(draftKey())}catch(e){};$('#task-trace').hidden=true;$('#task-trace-text').textContent='';$('#task-form').reset();$('#raw-message').value='';$('#parse-warnings').hidden=true;$('#parse-warnings').textContent='';$('#form-title').textContent='清运任务确认单';$('#edit-label').textContent='请核对后保存';$('#save-task').textContent='保存清运任务';$('#task-form').elements.namedItem('status').value='待安排';$('#task-form').elements.namedItem('priority').value='普通'}
+function setForm(data){const form=$('#task-form');FORM_FIELDS.forEach(key=>{const input=form.elements.namedItem(key);if(input&&data[key]!==undefined) input.value=data[key]||''});if(data.exactTime&&!data.timeWindow){form.elements.namedItem('timeWindow').value=data.exactTime}else if(data.exactTime&&data.timeWindow){form.elements.namedItem('timeWindow').value=data.timeWindow+' '+data.exactTime}$('#raw-message').value=data.rawMessage||''}
+function extract(){const raw=$('#raw-message').value.trim();if(!raw){notify('请先粘贴客户微信消息。',true);return}const result=DispatchParser.parseMessage(raw,new Date(DispatchReminders.chinaTime()+':00'));setForm({...result,status:'待安排',priority:result.priority});const warnings=result.warnings||[];$('#parse-warnings').hidden=!warnings.length;$('#parse-warnings').textContent='请人工核对：\n• '+warnings.join('\n• ');notify('信息已提取，请核对日期、危废代码、重量后保存。')}
+function formValues(){const obj={};FORM_FIELDS.forEach(k=>obj[k]=$('#task-form').elements.namedItem(k).value.trim());obj.rawMessage=$('#raw-message').value.trim();return obj}
+function save(e){e.preventDefault();const incoming=DispatchData.taskCustomer(formValues());if(!incoming.client&&!incoming.rawMessage){notify('至少填写客户名称或原始微信通知，防止保存空任务。',true);return}if(!incoming.client)incoming.client='待核实客户';if(!STATUSES.includes(incoming.status))incoming.status='待安排';if(!['普通','紧急'].includes(incoming.priority))incoming.priority='普通';
+const stamp=new Date().toISOString();if(!editingId){const normalized=incoming.rawMessage.replace(/\s+/g,'');if(normalized&&tasks.some(t=>String(t.rawMessage||'').replace(/\s+/g,'')===normalized)){if(!confirm('检测到相同的微信原文已经保存。是否仍然新建一条任务？'))return}if(tasks.length>=MAX_ITEMS){notify('达到本地最大任务条数，请先备份并清理旧数据。',true);return}
+if(!persist([{...incoming,id:uuid(),originalMessage:incoming.rawMessage,source:'web',createdAt:stamp,updatedAt:stamp,history:[{at:stamp,action:'创建任务'}]},...tasks]))return;
+notify('清运任务已保存，已进入待办清单。');
+}else{const index=tasks.findIndex(t=>t.id===editingId);if(index<0){notify('任务不存在，请重新打开。',true);return}const current=tasks[index];const events=Array.isArray(current.history)?current.history.slice(-49):[];events.push({at:stamp,action:current.status===incoming.status?'编辑任务':'状态从'+current.status+'变更为'+incoming.status});const copy=tasks.slice();copy[index]={...current,...incoming,updatedAt:stamp,history:events};if(!persist(copy))return;notify('任务更新成功。')}
+resetForm();draw();$('#tasks-section').scrollIntoView({behavior:'smooth',block:'start'})}
+function operate(id,action){const t=tasks.find(x=>x.id===id);if(!t){notify('该任务已经不存在。',true);return}if(action==='edit'){resetForm();editingId=t.id;setForm(t);$('#task-trace').hidden=false;$('#task-trace-text').textContent='首次录入原文：\n'+(t.originalMessage||t.rawMessage||'手动录入')+'\n\n操作记录：\n'+[...(t.legacyHistory||[]),...(t.history||[])].map(h=>h.at+' '+h.action).join('\n');$('#form-title').textContent='编辑清运任务';$('#edit-label').textContent='修改会保留进度记录';$('#save-task').textContent='保存任务修改';$('#new-section').scrollIntoView({behavior:'smooth'});return}
+if(action==='delete'){if(!confirm(`确定删除“${t.client}”的清运需求吗？请先备份重要记录。`))return;if(persist(tasks.filter(x=>x.id!==id))){notify('任务已删除。');draw()}return}
+if(action==='next'){const next={'待安排':'待确认','待确认':'已安排','已安排':'运输中','运输中':'已完成'}[t.status];if(!next)return;if(next==='已安排'&&!t.carrier&&!confirm('尚未录入承运单位。确定仍标记为“已安排”吗？'))return;const stamp=new Date().toISOString();if(persist(tasks.map(x=>x.id===id?{...x,status:next,updatedAt:stamp,history:[...(x.history||[]).slice(-49),{at:stamp,action:'状态变更为'+next}]}:x))){notify('已更新：'+next);draw()}}}
+function selectFilter(value){customerHistory=null;filter=value;document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));draw()}
+function switchView(value){document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===value));if(value==='tasks'){ $('#page-title').textContent='清运任务管理';$('#page-subtitle').textContent='检索、修改和推进每条客户清运需求';$('#tasks-section').scrollIntoView({behavior:'smooth'})}else if(value==='new'){ $('#page-title').textContent='新建清运需求';$('#page-subtitle').textContent='快速解析微信文字并建立待办';resetForm();$('#new-section').scrollIntoView({behavior:'smooth'})}else{$('#page-title').textContent='清运工作总览';$('#page-subtitle').textContent='把微信通知变成确定的执行计划，重要任务不遗漏。';window.scrollTo({top:0,behavior:'smooth'})}}
+function download(name,content,mime){const blob=new Blob([content],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function csvCell(v){let text=String(v??'');if(/^[\s]*[=+@\-]/.test(text))text="'"+text;return '"'+text.replace(/"/g,'""')+'"'}
+function exportCSV(){const cols=[['client','产废企业'],['pickupDate','计划清运日期'],['timeWindow','清运时段'],['wasteName','废物名称'],['wasteCode','危废代码'],['weight','预计重量'],['packaging','包装件数'],['status','当前状态'],['priority','优先级'],['carrier','承运单位'],['plate','车牌'],['driver','司机'],['contactName','联系人'],['phone','电话'],['address','清运地址'],['remindAt','跟进提醒'],['notes','执行备注'],['rawMessage','微信原文'],['createdAt','创建时间']];const lines=[cols.map(x=>csvCell(x[1])).join(',')];for(const t of sorted(tasks))lines.push(cols.map(x=>csvCell(t[x[0]])).join(','));download('危废清运计划_'+today()+'.csv','\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8');notify('已生成清运计划 CSV，可使用 Excel 打开。')}
+async function exportJSON(){try{await DispatchData.authorizeManagement('backup')}catch(e){notify(e.message,true);return}download('清运智办_数据备份_'+today()+'.json',JSON.stringify(DispatchData.backup(),null,2),'application/json;charset=utf-8');notify('JSON 备份已导出，请妥善保管文件。')}
+const stringKeys=['customerId','source','weightUnit','actualWeight','packageCount','dateInterpretation','verificationStatus','client','pickupDate','timeWindow','wasteName','wasteCode','weight','packaging','contactName','phone','address','status','priority','carrier','plate','driver','remindAt','notes','rawMessage','createdAt','updatedAt'];
+function cleanImported(x){if(!x||typeof x!=='object'||Array.isArray(x))return null;const o={id:(typeof x.id==='string'&&/^[a-zA-Z0-9_-]{4,100}$/.test(x.id))?x.id:uuid()};stringKeys.forEach(k=>o[k]=typeof x[k]==='string'?x[k].slice(0,k==='rawMessage'?10000:k==='notes'?1000:200):'');o.history=Array.isArray(x.history)?x.history.slice(-50).map(h=>({at:String(h.at||'').slice(0,40),action:String(h.action||'').slice(0,150)})):[];if(!STATUSES.includes(o.status))o.status='待确认';if(!['普通','紧急'].includes(o.priority))o.priority='普通';if(!o.client&&!o.rawMessage)return null;return o}
+async function importJSON(file){if(!file)return;if(file.size>10*1024*1024){notify('备份上限10MB。',true);return}try{const obj=JSON.parse(await file.text());const incoming=DispatchBackup.validate(obj);if(!confirm('将合并恢复 '+incoming.tasks.length+' 条任务及客户/提醒，保留当前数据，相同ID跳过。云端模式会加入待同步队列。是否继续？'))return;const added=DispatchBackup.restore(DispatchData.repo,obj);DispatchData.changed();notify('备份恢复完成，新增 '+added+' 条记录。')}catch(e){notify('导入失败：'+e.message,true)}finally{$('#import-file').value=''}}$('#parse-message').addEventListener('click',extract);
+$('#sample-msg').addEventListener('click',()=>{$('#raw-message').value='张经理，上海某某电子公司下周一上午要清运废液，大概5吨，20个桶，尽量上午安排车辆。';extract()});
+$('#task-form').addEventListener('submit',save);
+$('#reset-form').addEventListener('click',()=>{resetForm();notify('表单已清空。')});
+$('#open-new').addEventListener('click',()=>switchView('new'));
+$('#task-list').addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(el)operate(el.dataset.id,el.dataset.action)});
+$('#filters').addEventListener('click',e=>{const el=e.target.closest('[data-filter]');if(el)selectFilter(el.dataset.filter)});
+$('#search').addEventListener('input',draw);
+document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
+$('#jump-alerts').addEventListener('click',()=>{$('#reminders-section').scrollIntoView({behavior:'smooth'})});
+$('#export-csv').addEventListener('click',exportCSV);
+$('#export-json').addEventListener('click',exportJSON);
+$('#import-file').addEventListener('change',e=>importJSON(e.target.files[0]));
+$('#today-label').textContent=new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long',timeZone:'Asia/Shanghai'});
+let lastScope=DispatchData.repo.status().scope||'local';
+function draftKey(){return 'dispatch_capture_draft:'+(DispatchData.repo.status().scope||'local')}
+function saveDraft(){try{localStorage.setItem(draftKey(),JSON.stringify({form:formValues(),editingId}))}catch(e){notify('草稿暂存失败，请及时备份。',true)}}
+function restoreDraft(){try{const draft=JSON.parse(localStorage.getItem(draftKey())||'null');if(draft){setForm(draft.form);editingId=draft.editingId||null;if(editingId){$('#form-title').textContent='编辑清运任务';$('#save-task').textContent='保存任务修改'}}}catch(e){notify('暂存草稿无法读取，请检查备份。',true)}}
+window.addEventListener('dispatch-data-change',()=>{const scope=DispatchData.repo.status().scope||'local';if(scope!==lastScope){editingId=null;$('#task-form').reset();$('#raw-message').value='';customerHistory=null;lastScope=scope;restoreDraft()}tasks=load();draw()});
+$('#raw-message').addEventListener('input',saveDraft);$('#task-form').addEventListener('input',saveDraft);$('#parse-message').addEventListener('click',saveDraft);
+window.addEventListener('dispatch-open-task',e=>operate(e.detail,'edit'));
+window.addEventListener('dispatch-use-customer',e=>{resetForm();setForm({...e.detail,client:e.detail.name,customerId:e.detail.id});$('#new-section').scrollIntoView({behavior:'smooth'})});
+window.addEventListener('dispatch-customer-history',e=>{selectFilter('全部');customerHistory=e.detail;$('#search').value='';draw();$('#tasks-section').scrollIntoView({behavior:'smooth'})});
+$('#task-form').elements.namedItem('client').addEventListener('change',e=>{const c=DispatchData.repo.list('customers').find(x=>[x.name,...x.aliases||[]].includes(e.target.value.trim()));const f=$('#task-form').elements;if(c){f.namedItem('client').value=c.name;f.namedItem('customerId').value=c.id;for(const k of ['contactName','phone','address'])if(!f.namedItem(k).value)f.namedItem(k).value=c[k]||''}else f.namedItem('customerId').value=''});
+tasks=load();draw();restoreDraft();
+})();
+
+</script>
+</body>
+</html>

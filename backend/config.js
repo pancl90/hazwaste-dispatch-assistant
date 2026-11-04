@@ -1,0 +1,7 @@
+'use strict';const fs=require('node:fs');const path=require('node:path');const crypto=require('node:crypto');
+function config(){const dataDir=path.resolve(process.env.DATA_DIR||path.join(__dirname,'../data'));if(process.env.NODE_ENV!=='production'&&!process.env.DATA_KEY&&!fs.existsSync(path.join(dataDir,'local.key'))&&!fs.existsSync(path.join(dataDir,'store.enc'))){fs.mkdirSync(dataDir,{recursive:true,mode:0o700});fs.writeFileSync(path.join(dataDir,'local.key'),crypto.randomBytes(32),{mode:0o600,flag:'wx'})}let key;if(process.env.DATA_KEY)key=Buffer.from(process.env.DATA_KEY,'base64');else if(process.env.NODE_ENV!=='production'&&fs.existsSync(path.join(dataDir,'local.key')))key=fs.readFileSync(path.join(dataDir,'local.key'));else throw Error('现有数据缺少密钥，已停止启动。生产环境须设置 DATA_KEY；本地环境请恢复原 local.key。');
+ let templateData={};try{templateData=JSON.parse(process.env.WX_TEMPLATE_DATA||'{}')}catch(e){throw Error('WX_TEMPLATE_DATA 不是有效 JSON')}
+ const production=process.env.NODE_ENV==='production';if(production&&(!process.env.PUBLIC_ORIGIN||!process.env.PUBLIC_ORIGIN.startsWith('https://')))throw Error('生产环境必须配置 HTTPS PUBLIC_ORIGIN');
+ return {dataDir,key,allowHttp:!production,trustProxy:production&&process.env.TRUST_PROXY==='1',publicOrigin:process.env.PUBLIC_ORIGIN,worker:process.env.WX_WORKER==='1',wechat:{appId:process.env.WX_APP_ID,appSecret:process.env.WX_APP_SECRET,templateId:process.env.WX_TEMPLATE_ID,templateData,state:process.env.WX_STATE||'formal'}};
+}
+module.exports={config};

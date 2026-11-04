@@ -1,0 +1,14 @@
+{
+  "description": "开源清运协调助手：离线、云端同步、客户和提醒",
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "危废清运智能待办助手",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "urlCheck": true
+  },
+  "libVersion": "3.0.0"
+}

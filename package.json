@@ -1,0 +1,24 @@
+{
+  "name": "hazwaste-dispatch-assistant",
+  "version": "2.3.0",
+  "private": true,
+  "description": "危废清运协调助手：离线工作台、企业同步与官方微信订阅通知",
+  "scripts": {
+    "test": "node --test tests/*.test.js && node scripts/check.js",
+    "serve": "node server.js",
+    "build": "node scripts/build-standalone.js && node scripts/build-cloud.js",
+    "init-server": "node scripts/admin.js init"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pancl90/hazwaste-dispatch-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pancl90/hazwaste-dispatch-assistant/issues"
+  },
+  "homepage": "https://github.com/pancl90/hazwaste-dispatch-assistant#readme",
+  "engines": {
+    "node": ">=18"
+  }
+}

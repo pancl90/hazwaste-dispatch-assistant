@@ -1,0 +1,9 @@
+'use strict';const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),assert=require('node:assert/strict');const root=path.resolve(__dirname,'..');
+function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(dir,x.name)):[path.join(dir,x.name)])}
+const files=['backend','web','miniprogram','scripts','cloudfunctions'].flatMap(dir=>walk(path.join(root,dir)));for(const file of [...files.filter(f=>f.endsWith('.js')),path.join(root,'server.js')]){const result=cp.spawnSync(process.execPath,['--check',file],{encoding:'utf8'});if(result.status!==0){process.stderr.write(result.stderr);process.exit(1)}}
+assert.equal(fs.readFileSync(path.join(root,'backend/model.js'),'utf8'),fs.readFileSync(path.join(root,'cloudfunctions/dispatch/model.js'),'utf8'),'云函数校验规则与共享模型不一致，请运行 npm run build');
+for(const file of files.filter(f=>f.endsWith('.json')))JSON.parse(fs.readFileSync(file,'utf8').replace(/^\uFEFF/,''));
+const app=JSON.parse(fs.readFileSync(path.join(root,'miniprogram/app.json'),'utf8').replace(/^\uFEFF/,''));for(const page of app.pages){for(const ext of ['js','json','wxml','wxss'])assert.ok(fs.existsSync(path.join(root,'miniprogram',page+'.'+ext)),page+'.'+ext)}
+// Validate all WXML event handlers against their corresponding Page methods.
+for(const file of files.filter(f=>f.endsWith('.wxml'))){const source=fs.readFileSync(file.replace(/\.wxml$/,'.js'),'utf8');for(const m of fs.readFileSync(file,'utf8').matchAll(/\b(?:bind|catch)(?:tap|input|change|submit)="([\w]+)"/g))assert.ok(new RegExp('\\b'+m[1]+'\\s*\\(').test(source),'Missing handler: '+file+' '+m[1])}
+assert.equal(fs.readFileSync(path.join(root,'START_HERE.html'),'utf8'),require('./build-standalone').build(),'免安装页面与源码不一致，请先运行 npm run build');console.log('PASS: all JavaScript syntax, JSON/page routes, WXML handlers and standalone parity');

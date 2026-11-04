@@ -1,0 +1,3 @@
+'use strict';const fs=require('node:fs');const path=require('node:path');const root=path.resolve(__dirname,'..');
+function build(){let html=fs.readFileSync(path.join(root,'web/index.html'),'utf8');html=html.replace('<link rel="stylesheet" href="styles.css"/>','<style>'+fs.readFileSync(path.join(root,'web/styles.css'),'utf8')+'</style>');html=html.replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>\n'+fs.readFileSync(path.resolve(root,'web',src),'utf8').replace(/<\/script/gi,'<\\/script')+'\n</script>');fs.writeFileSync(path.join(root,'START_HERE.html'),html,'utf8');return html}
+if(require.main===module){build();console.log('已生成免安装 START_HERE.html')}module.exports={build};

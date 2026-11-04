@@ -1,0 +1,22 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
+const {createApplication}=require('../backend/application');const {createRepository}=require('../miniprogram/utils/repository');const Backup=require('../miniprogram/utils/backup');
+function memory(){const m=new Map();return {get:k=>m.has(k)?structuredClone(m.get(k)):undefined,set:(k,v)=>m.set(k,structuredClone(v))}}
+test('real two-device roundtrip, conflict, lost response retry and offline sequential edits',async t=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'dispatch-sync-')),app=createApplication({dataDir:dir,key:Buffer.alloc(32,8),allowHttp:true});t.after(async()=>{await app.close();fs.rmSync(dir,{recursive:true,force:true})});
+ await app.addUser({username:'sync-user',password:'Test-sync-only-123!',orgId:'test-org'});await app.listen(0);const base='http://127.0.0.1:'+app.port;
+ const token=(await (await fetch(base+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'sync-user',password:'Test-sync-only-123!'})})).json()).token;
+ async function request(route,method='GET',body){const r=await fetch(base+route,{method,headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:body?JSON.stringify(body):undefined});const data=await r.json();if(!r.ok){const e=Error(data.error);e.status=r.status;e.details=data.details;throw e}return data}
+ const a=createRepository(memory()),b=createRepository(memory());a.connect({scope:'one-user',request});b.connect({scope:'one-user',request});a.save('tasks',[{id:'sync-task',client:'虚构客户',status:'待安排',notes:'创建',rawMessage:'虚构的原始通知'}]);await a.sync();await b.sync();
+ a.save('tasks',a.list('tasks').map(x=>({...x,notes:'设备一更新'})));b.save('tasks',b.list('tasks').map(x=>({...x,notes:'设备二离线更新'})));await a.sync();await b.sync();assert.equal(b.status().conflicts.length,1);assert.equal(b.list('tasks')[0].notes,'设备二离线更新');b.resolve('tasks','sync-task','local');await b.sync();await a.sync();assert.equal(a.list('tasks')[0].notes,'设备二离线更新');
+ const c=createRepository(memory());let loseResponse=true;c.connect({scope:'one-user',request:async(route,method,body)=>{const result=await request(route,method,body);if(method==='PUT'&&loseResponse){loseResponse=false;throw Error('response lost')}return result}});await c.sync();
+ c.save('tasks',c.list('tasks').map(x=>({...x,notes:'离线第一步'})));c.save('tasks',c.list('tasks').map(x=>({...x,notes:'离线第二步'})));await assert.rejects(c.sync(),/response lost/);assert.equal(c.status().pending,2);await c.sync();assert.equal(c.status().pending,0);assert.equal(c.list('tasks')[0].notes,'离线第二步');assert.equal(c.list('tasks')[0].revision,5);
+ c.save('tasks',c.list('tasks').map(x=>({...x,rawMessage:'补充原文'})));await c.sync();assert.equal(c.list('tasks')[0].originalMessage,'虚构的原始通知');
+ const restored={id:'restored-task',client:'恢复演示企业',status:'待安排',rawMessage:'更正后的原文',originalMessage:'首条原文'.repeat(200)};c.save('tasks',[...c.list('tasks'),restored]);await c.sync();assert.equal(c.list('tasks').find(x=>x.id===restored.id).originalMessage,restored.originalMessage);
+});
+test('full backup restores tasks/customers/reminder state idempotently; bad linkage changes nothing',()=>{
+ const repo=createRepository(memory()),backup={format:'hazwaste-dispatch-backup',version:1,customers:[{id:'customer-1',name:'演示客户',aliases:['演示']}],tasks:[{id:'task-1',client:'演示客户',customerId:'customer-1',status:'待确认',rawMessage:'虚构通知'}],reminderStates:[{id:'state-1',taskId:'task-1',reminderKey:'test-key',readAt:'2026-10-31T01:00:00Z'}]};assert.equal(Backup.restore(repo,backup),3);assert.equal(Backup.restore(repo,backup),0);assert.equal(repo.list('customers')[0].aliases[0],'演示');assert.equal(repo.list('reminderStates').length,1);const invalid=structuredClone(backup);invalid.tasks[0].customerId='not-in-backup';assert.throws(()=>Backup.restore(repo,invalid),/关联客户/);assert.equal(repo.list('tasks')[0].customerId,'customer-1');
+});
+test('storage failure cannot mutate a previously saved cloud state',()=>{
+ const base=memory();let full=false;const store={get:base.get,set:(k,v)=>{if(full)throw Error('full');base.set(k,v)}};const repo=createRepository(store);repo.connect({scope:'test',request:async()=>{}});repo.save('tasks',[{id:'task-1',client:'原记录'}]);full=true;assert.throws(()=>repo.save('tasks',[{id:'task-1',client:'未能保存'}]),/full/);assert.equal(repo.list('tasks')[0].client,'原记录');assert.equal(repo.status().pending,1);
+});

@@ -1,0 +1,28 @@
+# Business data, credentials and local deployment files
+data/
+output/
+backups/
+exports/
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.enc
+*.log
+*.local.json
+project.private.config.json
+cloudbaserc.json
+.cloudbaserc*
+role-seed*.json
+admin-seed*.json
+
+# Dependencies and editor / OS files
+node_modules/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.zip
+*.bak

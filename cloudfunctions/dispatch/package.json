@@ -1,0 +1,7 @@
+{
+  "name": "dispatch",
+  "version": "2.3.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": { "wx-server-sdk": "4.0.2" }
+}

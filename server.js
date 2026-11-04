@@ -1,0 +1,3 @@
+'use strict';
+const {createApplication}=require('./backend/application');const {config}=require('./backend/config');
+(async()=>{let app;try{const opts=config();app=createApplication(opts);const host=process.env.HOST||'127.0.0.1';if(process.env.NODE_ENV!=='production'&&!['127.0.0.1','::1'].includes(host))throw Error('试用模式仅允许本机访问；远程部署请配置生产HTTPS');await app.listen(Number(process.env.PORT)||8765,host);console.log('清运智办：http://127.0.0.1:'+app.port+'/web/');console.log('离线旧数据不会自动上传。请登录并主动选择迁移。');for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{await app.close();process.exit(0)})}catch(e){console.error(e.message);if(app)await app.close();process.exitCode=1}})();

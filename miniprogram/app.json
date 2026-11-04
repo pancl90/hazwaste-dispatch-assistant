@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/operations/operations"
+  ],
+  "window": {
+    "navigationBarTitleText": "清运智办",
+    "navigationBarBackgroundColor": "#f2f2f7",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f2f2f7"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

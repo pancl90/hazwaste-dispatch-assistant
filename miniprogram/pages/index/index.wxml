@@ -1,0 +1,62 @@
+<view class="screen">
+  <view class="page-heading">
+    <view class="date-label">{{dateLabel}}</view>
+    <view class="page-heading-row"><view class="large-title">{{tab==='home'?'工作台':tab==='new'?'新建清运':'全部记录'}}</view><view class="profile-badge" data-tab="sync" bindtap="openOperations"><view class="icon cloud"></view></view></view>
+    <view class="page-caption">{{tab==='home'?'每一条清运需求，都有明确的下一步。':tab==='new'?'粘贴消息，核对后保存。':'安排进度与客户需求，随时掌握。'}}</view>
+  </view>
+  <block wx:if="{{tab==='home'}}">
+    <view class="summary-grid">
+      <view class="summary-card"><view class="summary-head"><view class="icon-tile blue"><view class="icon list"></view></view><text class="summary-number">{{summary.total}}</text></view><view class="summary-label">全部需求</view></view>
+      <view class="summary-card"><view class="summary-head"><view class="icon-tile orange"><view class="icon calendar"></view></view><text class="summary-number">{{summary.pending}}</text></view><view class="summary-label">待跟进</view></view>
+      <view class="summary-card"><view class="summary-head"><view class="icon-tile purple"><view class="icon bell"></view></view><text class="summary-number">{{summary.alerts}}</text></view><view class="summary-label">重点提醒</view></view>
+    </view>
+    <view class="capture-wrap"><button class="capture-button" size="default" style="width:100%;max-width:none;margin:0" data-tab="new" bindtap="chooseTab"><view class="capture-plus"><view class="icon plus"></view></view><view class="capture-copy"><view>新建清运需求</view><text>把客户消息，变成一条可靠待办</text></view><view class="chevron"></view></button></view>
+    <view class="section-heading"><text>常用功能</text><text class="section-note">{{cloudConnected?'云端账户':'本地模式'}}</text></view>
+    <view class="shortcut-card card">
+      <view class="shortcut-row" data-tab="customers" bindtap="openOperations"><view class="icon-tile blue"><view class="icon people"></view></view><view class="shortcut-copy"><view>客户档案</view><text>联系人、装货地址与清运历史</text></view><view class="chevron"></view></view>
+      <view class="shortcut-row" data-tab="reminders" bindtap="openOperations"><view class="icon-tile orange"><view class="icon bell"></view></view><view class="shortcut-copy"><view>提醒中心</view><text>{{summary.alerts?'有 '+summary.alerts+' 条任务需要核实':'今天也可以从容安排'}}</text></view><view wx:if="{{summary.alerts}}" class="count-badge">{{summary.alerts}}</view><view class="chevron"></view></view>
+      <view class="shortcut-row" data-tab="sync" bindtap="openOperations"><view class="icon-tile green"><view class="icon cloud"></view></view><view class="shortcut-copy"><view>同步与备份</view><text>保存进展，安心切换设备</text></view><view class="chevron"></view></view>
+    </view>
+    <view class="section-heading"><text>近期清运</text><text class="section-link" data-tab="all" bindtap="chooseTab">查看全部</text></view>
+    <view wx:if="{{!items.length}}" class="empty card"><view class="empty-symbol"><view class="icon list"></view></view><view class="empty-title">从一条消息开始</view><view class="empty-caption">把客户发来的清运通知记下来，<br/>后续安排就有了着落。</view><button class="secondary start-btn" data-tab="new" bindtap="chooseTab">登记第一条需求</button></view>
+    <block wx:for="{{items}}" wx:key="id"><view class="task card" data-id="{{item.id}}" bindtap="openDetail"><view class="task-row"><view class="task-name">{{item.client}}</view><text class="pill {{item.stateClass}}">{{item.status}}</text></view><view class="task-meta"><text class="task-date">{{item.pickupDate||'日期待确认'}}</text><text> · {{item.timeWindow||'时段待确认'}}</text></view><view class="task-bottom"><text>{{item.wasteName||'危废待确认'}} · {{item.weight||'数量待确认'}}</text><view class="chevron"></view></view><view wx:if="{{item.alertLabel}}" class="task-attention"><view class="attention-dot"></view><text>{{item.alertLabel}}</text></view></view></block>
+    <view class="footer-note">清运智办 · 记录每一次沟通与安排</view>
+  </block>
+  <block wx:if="{{tab==='new'}}">
+    <view class="group-label">原始通知</view>
+    <view class="entry card"><textarea class="raw-input" placeholder="粘贴客户的清运通知，例如：某公司下周一上午清运废液5吨、20桶，请安排车辆。" maxlength="10000" value="{{raw}}" bindinput="rawInput" auto-height="false"/><view class="capture-actions"><button class="secondary" bindtap="paste">读取剪贴板</button><button class="primary" bindtap="parse">提取清运信息</button></view></view>
+    <view class="group-note">只在你点击时读取剪贴板，文字解析在本机完成。</view>
+    <view class="group-label">清运计划</view>
+    <view class="group-card">
+      <view class="field"><text>产废企业 / 客户</text><input data-field="client" value="{{form.client}}" bindinput="editField" placeholder="请输入客户全称"/></view>
+      <view class="field"><text>计划清运日期</text><picker mode="date" value="{{form.pickupDate}}" bindchange="dateChange"><view class="picker-field"><text>{{form.pickupDate||'选择清运日期'}}</text><view class="chevron"></view></view></picker></view>
+      <view class="field"><text>清运时段</text><input data-field="timeWindow" value="{{form.timeWindow}}" bindinput="editField" placeholder="上午 / 下午 / 具体时间"/></view>
+      <view class="field"><text>优先级</text><picker range="{{priorities}}" value="{{priorityIndex}}" bindchange="priorityChange"><view class="picker-field"><text>{{form.priority}}</text><view class="chevron"></view></view></picker></view>
+    </view>
+    <view class="group-label">危废信息 · 缺失内容请核实</view>
+    <view class="group-card">
+      <view class="field"><text>废物名称</text><input data-field="wasteName" value="{{form.wasteName}}" bindinput="editField" placeholder="例如：废液"/></view>
+      <view class="field"><text>危废代码</text><input data-field="wasteCode" value="{{form.wasteCode}}" bindinput="editField" placeholder="未核实时可留空"/></view>
+      <view class="field"><text>预计重量 / 包装</text><view class="two-inputs"><input data-field="weight" value="{{form.weight}}" bindinput="editField" placeholder="例如：5吨"/><input data-field="packaging" value="{{form.packaging}}" bindinput="editField" placeholder="例如：20桶"/></view></view>
+    </view>
+    <view class="group-label">联系与装货信息</view>
+    <view class="group-card">
+      <view class="field"><text>联系人</text><input data-field="contactName" value="{{form.contactName}}" bindinput="editField" placeholder="选填"/></view>
+      <view class="field"><text>联系电话</text><input data-field="phone" value="{{form.phone}}" bindinput="editField" placeholder="选填"/></view>
+      <view class="field"><text>清运地址</text><input data-field="address" value="{{form.address}}" bindinput="editField" placeholder="客户装货地址"/></view>
+      <view class="field"><text>跟进备注</text><textarea data-field="notes" value="{{form.notes}}" bindinput="editField" placeholder="补充沟通要点与待核实事项" maxlength="1000"/></view>
+    </view>
+    <view wx:if="{{warnings.length}}" class="warn"><view class="warn-title">保存前，请逐项核对</view><view wx:for="{{warnings}}" wx:for-item="warning" wx:key="*this" class="warn-line">· {{warning}}</view></view>
+    <view class="save-area"><button class="primary save-btn" bindtap="save">核对完成，保存需求</button><view class="tip center">保存后即可安排车辆、跟进状态。</view></view>
+  </block>
+  <block wx:if="{{tab==='all'}}">
+    <view class="search-wrap"><view class="icon search"></view><input placeholder="搜索客户、危废、车牌或消息" value="{{search}}" bindinput="searchChange"/></view>
+    <scroll-view scroll-x="true" class="filter-scroll"><view class="filter-row"><text class="chip {{filter==='全部'?'selected':''}}" data-filter="全部" bindtap="setFilter">全部</text><text class="chip {{filter==='待安排'?'selected':''}}" data-filter="待安排" bindtap="setFilter">待安排</text><text class="chip {{filter==='待确认'?'selected':''}}" data-filter="待确认" bindtap="setFilter">待确认</text><text class="chip {{filter==='已安排'?'selected':''}}" data-filter="已安排" bindtap="setFilter">已安排</text><text class="chip {{filter==='运输中'?'selected':''}}" data-filter="运输中" bindtap="setFilter">运输中</text><text class="chip {{filter==='已完成'?'selected':''}}" data-filter="已完成" bindtap="setFilter">已完成</text><text class="chip {{filter==='已取消'?'selected':''}}" data-filter="已取消" bindtap="setFilter">已取消</text><text class="chip {{filter==='提醒'?'selected':''}}" data-filter="提醒" bindtap="setFilter">重点提醒</text></view></scroll-view>
+    <view class="records-count">{{filtered.length}} 条清运记录</view>
+    <view wx:if="{{!filtered.length}}" class="empty card"><view class="empty-symbol"><view class="icon search"></view></view><view class="empty-title">暂无匹配记录</view><view class="empty-caption">试试其他关键词，或调整筛选条件。</view></view>
+    <block wx:for="{{filtered}}" wx:key="id"><view class="task card" data-id="{{item.id}}" bindtap="openDetail"><view class="task-row"><view class="task-name">{{item.client}}</view><text class="pill {{item.stateClass}}">{{item.status}}</text></view><view class="task-meta"><text class="task-date">{{item.pickupDate||'日期待确认'}}</text><text> · {{item.timeWindow||'时段待确认'}}</text></view><view class="task-bottom"><text>{{item.wasteName||'危废待确认'}} · {{item.weight||'数量待确认'}}</text><view class="chevron"></view></view><view wx:if="{{item.alertLabel}}" class="task-attention"><view class="attention-dot"></view><text>{{item.alertLabel}}</text></view></view></block>
+    <view class="group-note">本地记录保存在当前设备。云端账户修改后，请在同步设置中完成同步。</view>
+  </block>
+  <view class="bottom-space"></view>
+  <view class="bottom-nav"><view class="nav-item {{tab==='home'?'active':''}}" data-tab="home" bindtap="chooseTab"><view class="icon calendar"></view><text>工作台</text></view><view class="nav-item nav-create {{tab==='new'?'active':''}}" data-tab="new" bindtap="chooseTab"><view class="nav-plus"><view class="icon plus"></view></view><text>新建清运</text></view><view class="nav-item {{tab==='all'?'active':''}}" data-tab="all" bindtap="chooseTab"><view class="icon list"></view><text>全部记录</text></view></view>
+</view>
